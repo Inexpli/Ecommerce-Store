@@ -1,0 +1,16 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+{% block content %}
+    {% for product in products %}
+    <ol>
+        <hr>
+        <li><h3>{{ product.title }}</h3></li>
+        <li><h4>{{ product.description }}</h4></li>
+        <li><h4>{{ product.price }}</h4></li>
+        <li><h4>{{ product.in_stock }}</h4></li>
+        <li><h4>{{ product.promotion }}</h4></li>
+        <li><img src="{{ product.image.url }}" style="height: 100px; width: 100px;"></li>
+    </ol>
+    {% endfor %}
+{% endblock %}

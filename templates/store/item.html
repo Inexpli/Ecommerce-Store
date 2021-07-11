@@ -1,14 +1,95 @@
 {% extends 'store/base.html' %}
 {% load static %}
 {% block title %}{{ product.title }}{% endblock %}
+{% block nav-home %}
+    text-white
+{% endblock %}
 {% block content %}
-    <div class='row g-0 border rounded'>
-        <div class='col-5'>
-            <h5>{{ product.description }}</h5>
-            <h4>{{ product.price }}</h4>
+<section class="mb-5">
+    <div class="row">
+        <div class="col-md-6 p-5">
+            <img class="img-fluid" src="{{ product.image.url }}">
         </div>
-        <div class='col-7 item-image'>
-            <img class='img-fluid' src="{{ product.image.url }}">
+        <div class="col-md-6 pt-5">
+            <h5>{{ product.title }}</h5>
+            <p><span class="mr-1"><strong>${{product.price}}</strong></span></p>
+            <p class="pt-1">{{ product.description }}</p>
+            <div class="table-responsive">
+                <table class="table table-sm table-borderless mb-0">
+                <tbody>
+                    <tr>
+                    <th class="pl-0 w-25" scope="row"><strong>Model</strong></th>
+                    <td>NMD_R1</td>
+                    </tr>
+                    <tr>
+                    <th class="pl-0 w-25" scope="row"><strong>Color</strong></th>
+                    <td>Black</td>
+                    </tr>
+                    <tr>
+                    <th class="pl-0 w-25" scope="row"><strong>Delivery</strong></th>
+                    <td>USA, Europe</td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+            <hr>
+            <div class="table-responsive mb-2">
+                <table class="table table-sm table-borderless">
+                <tbody>
+                    <tr>
+                    <td class="pl-0 pb-0 w-25">Quantity</td>
+                    <td class="pb-0">Select size</td>
+                    </tr>
+                    <tr>
+                    <td class="pl-0"><input type='number' value="1" min="1" max="9">
+                    </td>
+                    <td>
+                        <div class="mt-1">
+                            <div class="form-check form-check-inline pl-0">
+                                <input type="radio" class="form-check-input" id="small" name="size-38">
+                                <label class="form-check-label small text-uppercase card-link-secondary"
+                                for="small">38</label>
+                            </div>
+                            <div class="form-check form-check-inline pl-0">
+                                <input type="radio" class="form-check-input" id="medium" name="size-39">
+                                <label class="form-check-label small text-uppercase card-link-secondary"
+                                for="medium">39</label>
+                            </div>
+                            <div class="form-check form-check-inline pl-0">
+                                <input type="radio" class="form-check-input" id="large" name="size-40">
+                                <label class="form-check-label small text-uppercase card-link-secondary"
+                                for="large">40</label>
+                            </div>
+                            <div class="form-check form-check-inline pl-0">
+                                <input type="radio" class="form-check-input" id="large" name="size-41">
+                                <label class="form-check-label small text-uppercase card-link-secondary"
+                                for="large">41</label>
+                            </div>
+                            <div class="form-check form-check-inline pl-0">
+                                <input type="radio" class="form-check-input" id="large" name="size-42">
+                                <label class="form-check-label small text-uppercase card-link-secondary"
+                                for="large">42</label>
+                            </div>
+                            <div class="form-check form-check-inline pl-0">
+                                <input type="radio" class="form-check-input" id="large" name="size-43">
+                                <label class="form-check-label small text-uppercase card-link-secondary"
+                                for="large">43</label>
+                            </div>
+                            <div class="form-check form-check-inline pl-0">
+                                <input type="radio" class="form-check-input" id="large" name="size-44">
+                                <label class="form-check-label small text-uppercase card-link-secondary"
+                                for="large">44</label>
+                            </div>
+                        </div>
+                    </td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+            <button type="button" class="btn btn-dark btn-md mr-1 mt-3 mb-2">Buy now</button>
+            <button type="button" class="btn btn-secondary btn-md mt-3 mr-1 mb-2"><i
+                class="fas fa-shopping-cart pr-2"></i>Add to basket</button>
         </div>
     </div>
+</section>
 {% endblock %}

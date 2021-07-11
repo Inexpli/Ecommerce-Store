@@ -21,3 +21,8 @@ img, svg {
 .nav-link:hover {
     color: gray !important;
 }
+
+.item-image {
+    border-radius: 5%;
+    box-shadow: 3px 3px grey;
+}

@@ -26,3 +26,7 @@ img, svg {
     border-radius: 5%;
     box-shadow: 3px 3px grey;
 }
+
+#quantity-select {
+    margin-left: 2rem;
+}

@@ -10,7 +10,7 @@
         <div class="col-md-6 p-5">
             <img class="img-fluid item-image" src="{{ product.image.url }}">
         </div>
-        <div class="col-md-6 pt-5">
+        <div class="col-md-6 p-5">
             <h5>{{ product.title }}</h5>
             <p><span class="mr-1"><strong>${{product.price}}</strong></span></p>
             <p class="pt-1">{{ product.description }}</p>
@@ -41,12 +41,16 @@
                     <td class="pb-0">Select size</td>
                     </tr>
                     <tr>
-                    <td class="pl-0"><input type='number' value="1" min="1" max="9">
+                    <td class="pl-0"><select name="quantity" id="quantity-select">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
                     </td>
                     <td>
                         <div class="mt-1">
                             <div class="form-check form-check-inline pl-0">
-                                <input type="radio" class="form-check-input" id="small" name="size-38">
+                                <input type="radio" class="form-check-input" id="small" name="size-38" checked>
                                 <label class="form-check-label small text-uppercase card-link-secondary"
                                 for="small">38</label>
                             </div>
@@ -85,10 +89,17 @@
                     </tr>
                 </tbody>
                 </table>
+                {% if product.in_stock == False %}
+                    <h4 class="py-3">Out of Stock</h4>
+                {% else %}
+                    <button type="button" class="btn btn-dark btn-md mr-1 mt-3 mb-2">Buy now</button>
+                    <button type="button" class="btn btn-secondary btn-md mt-3 mr-1 mb-2">Add to basket
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
+                            <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/>
+                        </svg>
+                    </button>
+                {% endif%}
             </div>
-            <button type="button" class="btn btn-dark btn-md mr-1 mt-3 mb-2">Buy now</button>
-            <button type="button" class="btn btn-secondary btn-md mt-3 mr-1 mb-2"><i
-                class="fas fa-shopping-cart pr-2"></i>Add to basket</button>
         </div>
     </div>
 </section>

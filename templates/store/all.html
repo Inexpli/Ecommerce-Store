@@ -1,0 +1,47 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block title %}All Products{% endblock %}
+{% block nav-home %}
+    text-white
+{% endblock %}
+{% block nav-products %}
+    text-secondary
+{% endblock %}
+{% block content %}
+<main>
+
+    <section class="py-5 text-center container">
+      <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+          <h1 class="fw-light">All products</h1>
+          <p class="lead text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent in commodo neque. Sed vitae erat porttitor, dignissim ante at, dictum risus. Cras ut sapien congue, elementum ligula vel, finibus diam.</p>
+        </div>
+      </div>
+    </section>
+  
+    <div class="album py-5 bg-light">
+      <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        {% for product in products %}
+          <div class="col">
+            <div class="card shadow-sm">
+              <a href="{{ product.get_absolute_url }}"><img src="{{ product.image.url }}" class="img-fluid" role="img" preserveAspectRatio="xMidYMid slice" focusable="false"></a>
+              <div class="card-body">
+                <h4>{{ product.title|title }}</h4>
+                <p class="card-text">{{ product.description|slice:200 }}...</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Buy now</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Add to basket</button>
+                  </div>
+                  <strong class="text-muted">${{ product.price }}</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+        </div>
+      </div>
+    </div>
+</main>
+{% endblock %}

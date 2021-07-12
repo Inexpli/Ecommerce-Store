@@ -30,3 +30,21 @@ img, svg {
 #quantity-select {
     margin-left: 2rem;
 }
+
+@media screen and (max-width: 768px) {
+    .product-title {
+        font-size: 1rem !important;
+    }
+
+    .btn-product {
+        padding: .15rem .25rem !important;
+    }
+}
+
+.asteriskField {
+    color: red;
+}
+
+.form-group {
+    margin: 1.25rem 0 1.25rem 0;
+}

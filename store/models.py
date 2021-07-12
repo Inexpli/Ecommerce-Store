@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.fields import SlugField
 from django.urls import reverse
 
+
 class Category(models.Model):
     name = models.CharField(max_length=255, db_index=True)
     slug = models.SlugField(max_length=255, unique=True)

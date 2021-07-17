@@ -1,7 +1,8 @@
 from django.contrib import admin
 
-from .models import Category, Product
+from .models import Category, Product, Customer, User
 
+admin.register(User)
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -14,4 +15,10 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ['in_stock', 'created', 'price']
     list_editable = ['price', 'in_stock', 'promotion']
     prepopulated_fields = {'slug':('title',)}
+
+@admin.register(Customer)
+class CustomerAdmin(admin.ModelAdmin):
+    list_display = ['user', 'name', 'email', 'device']
+
+
 

@@ -1,8 +1,10 @@
-from django.shortcuts import get_object_or_404, redirect, render
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
+
+from store.models import Product
 
 from .basket import Basket
-from store.models import Product
+
 
 def basket_summary(request):
     return render(request, 'basket/summary.html')

@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}{{ product.title }}{% endblock %}
 {% block nav-home %}
-    text-white
+text-white
 {% endblock %}
 {% block content %}
 <section class="mb-5">
@@ -16,111 +16,128 @@
             <p class="pt-1">{{ product.description }}</p>
             <div class="table-responsive">
                 <table class="table table-sm table-borderless mb-0">
-                <tbody>
-                    <tr>
-                    <th class="pl-0 w-25" scope="row"><strong>Model</strong></th>
-                    <td>NMD_R1</td>
-                    </tr>
-                    <tr>
-                    <th class="pl-0 w-25" scope="row"><strong>Color</strong></th>
-                    <td>Black</td>
-                    </tr>
-                    <tr>
-                    <th class="pl-0 w-25" scope="row"><strong>Delivery</strong></th>
-                    <td>USA, Europe</td>
-                    </tr>
-                </tbody>
+                    <tbody>
+                        <tr>
+                            <th class="pl-0 w-25" scope="row"><strong>Model</strong></th>
+                            <td>NMD_R1</td>
+                        </tr>
+                        <tr>
+                            <th class="pl-0 w-25" scope="row"><strong>Color</strong></th>
+                            <td>Black</td>
+                        </tr>
+                        <tr>
+                            <th class="pl-0 w-25" scope="row"><strong>Delivery</strong></th>
+                            <td>USA, Europe</td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
             <hr>
             <div class="table-responsive mb-2">
                 <table class="table table-sm table-borderless">
-                <tbody>
-                    <tr>
-                    <td class="pl-0 pb-0 w-25">Quantity</td>
-                    <td class="pb-0">Select size</td>
-                    </tr>
-                    <tr>
-                    <td class="pl-0"><select name="quantity" id="quantity-select">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                    </select>
-                    </td>
-                    <td>
-                        <div class="mt-1">
-                            <div class="form-check form-check-inline pl-0">
-                                <input type="radio" class="form-check-input" id="small" name="size-38" checked>
-                                <label class="form-check-label small text-uppercase card-link-secondary"
-                                for="small">38</label>
-                            </div>
-                            <div class="form-check form-check-inline pl-0">
-                                <input type="radio" class="form-check-input" id="medium" name="size-39">
-                                <label class="form-check-label small text-uppercase card-link-secondary"
-                                for="medium">39</label>
-                            </div>
-                            <div class="form-check form-check-inline pl-0">
-                                <input type="radio" class="form-check-input" id="large" name="size-40">
-                                <label class="form-check-label small text-uppercase card-link-secondary"
-                                for="large">40</label>
-                            </div>
-                            <div class="form-check form-check-inline pl-0">
-                                <input type="radio" class="form-check-input" id="large" name="size-41">
-                                <label class="form-check-label small text-uppercase card-link-secondary"
-                                for="large">41</label>
-                            </div>
-                            <div class="form-check form-check-inline pl-0">
-                                <input type="radio" class="form-check-input" id="large" name="size-42">
-                                <label class="form-check-label small text-uppercase card-link-secondary"
-                                for="large">42</label>
-                            </div>
-                            <div class="form-check form-check-inline pl-0">
-                                <input type="radio" class="form-check-input" id="large" name="size-43">
-                                <label class="form-check-label small text-uppercase card-link-secondary"
-                                for="large">43</label>
-                            </div>
-                            <div class="form-check form-check-inline pl-0">
-                                <input type="radio" class="form-check-input" id="large" name="size-44">
-                                <label class="form-check-label small text-uppercase card-link-secondary"
-                                for="large">44</label>
-                            </div>
-                        </div>
-                    </td>
-                    </tr>
-                </tbody>
+                    <tbody>
+                        <tr>
+                            <td class="pl-0 pb-0 w-25">Quantity</td>
+                            <td class="pb-0">Select size</td>
+                        </tr>
+                        <tr>
+                            <td class="pl-0"><select name="quantity" id="quantity-select">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
+                            </td>
+                            <td>
+                                <div class="mt-1">
+                                    <div class="form-check form-check-inline pl-0">
+                                        <input type="radio" class="form-check-input" id="small" name="size-38" checked>
+                                        <label class="form-check-label small text-uppercase card-link-secondary"
+                                            for="small">38</label>
+                                    </div>
+                                    <div class="form-check form-check-inline pl-0">
+                                        <input type="radio" class="form-check-input" id="medium" name="size-39">
+                                        <label class="form-check-label small text-uppercase card-link-secondary"
+                                            for="medium">39</label>
+                                    </div>
+                                    <div class="form-check form-check-inline pl-0">
+                                        <input type="radio" class="form-check-input" id="large" name="size-40">
+                                        <label class="form-check-label small text-uppercase card-link-secondary"
+                                            for="large">40</label>
+                                    </div>
+                                    <div class="form-check form-check-inline pl-0">
+                                        <input type="radio" class="form-check-input" id="large" name="size-41">
+                                        <label class="form-check-label small text-uppercase card-link-secondary"
+                                            for="large">41</label>
+                                    </div>
+                                    <div class="form-check form-check-inline pl-0">
+                                        <input type="radio" class="form-check-input" id="large" name="size-42">
+                                        <label class="form-check-label small text-uppercase card-link-secondary"
+                                            for="large">42</label>
+                                    </div>
+                                    <div class="form-check form-check-inline pl-0">
+                                        <input type="radio" class="form-check-input" id="large" name="size-43">
+                                        <label class="form-check-label small text-uppercase card-link-secondary"
+                                            for="large">43</label>
+                                    </div>
+                                    <div class="form-check form-check-inline pl-0">
+                                        <input type="radio" class="form-check-input" id="large" name="size-44">
+                                        <label class="form-check-label small text-uppercase card-link-secondary"
+                                            for="large">44</label>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
                 {% if product.in_stock == False %}
-                    <h4 class="py-3">Out of Stock</h4>
+                <h4 class="py-3">Out of Stock</h4>
                 {% else %}
-                    <button type="button" class="btn btn-dark btn-md mr-1 mt-3 mb-2">Buy now</button>
-                    <button type="button" id="add-button" value="{{product.id}}" class="btn btn-secondary btn-md mt-3 mr-1 mb-2">Add to basket
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
-                            <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/>
-                        </svg>
-                    </button>
+                    <form method="POST" action="{% url 'store:item' product.slug product.id %}">
+                        {% csrf_token %}
+                        <button type="button" class="btn btn-dark btn-md mr-1 mt-3 mb-2">Buy now</button>
+                        <input min="1" value=1 type="number" name="quantity">
+                        <button type="submit" id="add-button" class="btn btn-secondary btn-md mt-3 mr-1 mb-2">Add to basket
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
+                                <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/>
+                            </svg>
+                        </button>
+                    </form>
                 {% endif%}
             </div>
         </div>
     </div>
 </section>
 <script>
-    $(document).on('click', '#add-button', function(e) {
-      e.preventDefault();
-      $.ajax({
-        type: 'POST',
-        url: '{% url "basket:basket_add" %}',
-        data: {
-          productid: $('#add-button').val(),
-          csrfmiddlewaretoken: "{{csrf_token}}",
-          action: 'post',
-        },
-        success: function (json) {
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
 
-        },
-        error: function (xhr, errmsg, err) {
+    function uuidv4() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0,
+                v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
 
-        },
-      });
-    })
-  </script>
+    let device = getCookie('device')
+
+    if (device == null || device == undefined) {
+        device = uuidv4()
+    }
+
+    document.cookie = 'device=' + device + ";domain=;path=/"
+</script>
 {% endblock %}

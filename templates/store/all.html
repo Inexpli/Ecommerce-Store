@@ -25,7 +25,7 @@
         {% for product in products %}
           <div class="col">
             <div class="card shadow-sm">
-              <a href="{{ product.get_absolute_url }}"><img src="{{ product.image.url }}" class="img-fluid" role="img" preserveAspectRatio="xMidYMid slice" focusable="false"></a>
+              <a href="{% url 'store:item' product.slug product.id %}"><img src="{{ product.image.url }}" class="img-fluid" role="img" preserveAspectRatio="xMidYMid slice" focusable="false"></a>
               <div class="card-body">
                 <h5 class="product-title" >{{ product.title|title }}</h5>
                 <p class="card-text">

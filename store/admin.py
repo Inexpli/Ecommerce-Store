@@ -2,7 +2,8 @@ from django.contrib import admin
 
 from .models import *
 
-admin.register(User)
+# admin.site.register(Order)
+# admin.site.register(OrderItem)
 
 
 @admin.register(Category)
@@ -20,6 +21,6 @@ class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
 
 
-@admin.register(Customer)
-class CustomerAdmin(admin.ModelAdmin):
-    list_display = ['user', 'name', 'email', 'device']
+# @admin.register(Customer)
+# class CustomerAdmin(admin.ModelAdmin):
+#     list_display = ['user', 'name', 'email', 'device']

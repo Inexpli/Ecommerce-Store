@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 .row {
     --bs-gutter-x: 0 !important;
     --bs-gutter-y: 0 !important;
@@ -8,13 +12,14 @@
     height: 70px;
 }
 
-img, svg {
+img,
+svg {
     margin-bottom: 3px;
 }
 
 .form-control:focus {
     outline: none !important;
-    border:1px solid black;
+    border: 1px solid black;
     box-shadow: 0 0 10px #ffffff;
 }
 

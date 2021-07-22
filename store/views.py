@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from store.forms import UserRegisterForm
 
-from .models import Category, Customer, Order, OrderItem, Product
+from .models import *
 
 # from django.contrib.auth.decorators import login_required
 
@@ -37,7 +37,7 @@ def register(request):
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account {username} has been created!')
-            return redirect('login')
+            return redirect('/login')
     else:
         form = UserRegisterForm()
 
@@ -50,18 +50,17 @@ def item(request, slug, pk):
 
     if request.method == 'POST':
         productID = Product.objects.get(id=pk)
-        # Get user account information
         try:
             customer = request.user.customer
         except:
-            device = request.COOKIES['device']
+            device = request.META['REMOTE_ADDR']
             customer, created = Customer.objects.get_or_create(device=device)
 
         order, created = Order.objects.get_or_create(
             customer=customer, complete=False)
         orderItem, created = OrderItem.objects.get_or_create(
             order=order, product=productID)
-        orderItem.quantity = request.POST['quantity']
+        orderItem.size = request.POST['size']
         orderItem.save()
 
         redirect('store:basket')  # TO FIX
@@ -72,38 +71,30 @@ def item(request, slug, pk):
     return render(request, 'store/item.html', context)
 
 
-# def product(request, pk):
-# 	product = Product.objects.get(id=pk)
+def product(request, pk):
+    product = Product.objects.get(id=pk)
 
-# 	if request.method == 'POST':
-# 		product = Product.objects.get(id=pk)
-# 		#Get user account information
-# 		try:
-# 			customer = request.user.customer
-# 		except:
-# 			device = request.COOKIES['device']
-# 			customer, created = Customer.objects.get_or_create(device=device)
+    if request.method == 'POST':
+        product = Product.objects.get(id=pk)
+        # Get user account information
+        try:
+            customer = request.user.customer
+        except:
+            device = request.META['REMOTE_ADDR']
+            customer, created = Customer.objects.get_or_create(device=device)
 
-# 		order, created = Order.objects.get_or_create(customer=customer, complete=False)
-# 		orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
-# 		orderItem.quantity=request.POST['quantity']
-# 		orderItem.save()
+        order, created = Order.objects.get_or_create(
+            customer=customer, complete=False)
+        orderItem, created = OrderItem.objects.get_or_create(
+            order=order, product=product)
+        orderItem.quantity = request.POST['quantity']
+        orderItem.save()
 
-# 		return redirect('store:basket')
+        return redirect('store:basket')
 
-# 	context = {'product':product}
-# 	return render(request, 'store/product.html', context)
+    context = {'product': product}
+    return render(request, 'store/product.html', context)
 
 
 def basket(request):
-    try:
-        customer = request.user.customer
-    except:
-        device = request.COOKIES['device']
-        customer, created = Customer.objects.get_or_create(device=device)
-
-    order, created = Order.objects.get_or_create(
-        customer=customer, complete=False)
-
-    context = {'order': order}
-    return render(request, 'store/basket.html', context)
+    return render(request, 'store/basket.html')

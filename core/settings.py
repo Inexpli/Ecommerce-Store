@@ -27,7 +27,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'store',
-    'basket',
     'crispy_forms',
 ]
 
@@ -55,7 +54,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'store.context_processors.categories',
-                'basket.context_processors.basket',
+                'store.context_processors.basket',
             ],
         },
     },
@@ -132,4 +131,10 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # Login Redirect
 
 LOGIN_REDIRECT_URL = '/'
-# LOGIN_URL = 'login'
+#LOGIN_URL = 'login'
+
+# Session
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+
+SESSION_COOKIE_HTTPONLY = True

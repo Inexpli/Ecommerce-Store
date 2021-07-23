@@ -6,10 +6,12 @@ text-white
 {% endblock %}
 {% block content %}
 	{% if order.orderitem_set.all %}
+	<div class="col-12 px-5 pt-5">
+		<a class="btn btn-outline-dark ml-5" onclick="Previous()">&#x2190; Continue Shopping</a>
+	</div>
 	<div class="container my-5 border">
-		<a class="btn btn-outline-dark my-4" onclick="Previous()">&#x2190; Continue Shopping</a>
 		<h2>Your Basket</h2>
-		<h4>Total: {{ get_basket_total }}</h4>
+		<h4>Total: {{ orders }}</h4>
 		<div class="row mt-4">
 			<div class="col-9 col-md-8">
 				<section class="items">
@@ -26,6 +28,7 @@ text-white
 							</div>
 							<div class="col-2 p-2">
 								<h5>${{item.product.price}}</h5>
+								<button type="submit" id="remove-item" class="btn btn-outline-secondary btn-md mt-3 mr-1 mb-2">Remove
 							</div>
 						</div>
 					{% endfor %}

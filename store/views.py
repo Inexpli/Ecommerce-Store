@@ -61,6 +61,7 @@ def item(request, slug, pk):
         orderItem, created = OrderItem.objects.get_or_create(
             order=order, product=productID)
         orderItem.size = request.POST['size']
+        orderItem.quantity = request.POST['quantity']
         orderItem.save()
 
         redirect('store:basket')  # TO FIX
@@ -69,31 +70,6 @@ def item(request, slug, pk):
         'product': product,
     }
     return render(request, 'store/item.html', context)
-
-
-def product(request, pk):
-    product = Product.objects.get(id=pk)
-
-    if request.method == 'POST':
-        product = Product.objects.get(id=pk)
-        # Get user account information
-        try:
-            customer = request.user.customer
-        except:
-            device = request.META['REMOTE_ADDR']
-            customer, created = Customer.objects.get_or_create(device=device)
-
-        order, created = Order.objects.get_or_create(
-            customer=customer, complete=False)
-        orderItem, created = OrderItem.objects.get_or_create(
-            order=order, product=product)
-        orderItem.quantity = request.POST['quantity']
-        orderItem.save()
-
-        return redirect('store:basket')
-
-    context = {'product': product}
-    return render(request, 'store/product.html', context)
 
 
 def basket(request):

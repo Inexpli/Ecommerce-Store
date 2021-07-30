@@ -27,7 +27,7 @@ text-secondary
         {% for product in products %}
         <div class="col">
           <div class="card shadow-sm">
-            <a href="{% url 'store:item' product.slug product.id %}"><img src="{{ product.image.url }}" class="img-fluid" role="img"
+            <a href="{% url 'store:item' product.slug %}"><img src="{{ product.image.url }}" class="img-fluid" role="img"
                 preserveAspectRatio="xMidYMid slice" focusable="false"></a>
             <div class="card-body">
               <h4>{{ product.title|title }}</h4>

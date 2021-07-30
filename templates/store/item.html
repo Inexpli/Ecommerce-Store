@@ -37,46 +37,44 @@ text-white
             </div>
             <hr>
             <div class="table-responsive mb-2">
-                <form method="POST" action="{% url 'store:item' product.slug product.id %}">
-                    {% csrf_token %}
-                    <table class="table table-sm table-borderless">
-                        <tbody>
-                            <tr>
-                                <td class="pb-0">Select size</td>
-                                <td class="pb-0">Quantity</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <select name="size" id="size-select">
-                                        <option value="38">38</option>
-                                        <option value="39">39</option>
-                                        <option value="40">40</option>
-                                        <option value="41">41</option>
-                                        <option value="42">42</option>
-                                        <option value="43">43</option>
-                                        <option value="44">44</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select name="quantity" id="quantity-select">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                    </select>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    {% if product.in_stock == False %}
-                        <h4 class="py-3">Out of Stock</h4>
-                        {% else %}
-                            <button type="button" class="btn btn-dark btn-md mr-1 mt-3 mb-2">Buy now</button>
-                            <button type="submit" id="add-button" class="btn btn-secondary btn-md mt-3 mr-1 mb-2">Add to basket
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
-                                    <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/>
-                                </svg>
-                            </button>
-                    {% endif%}
+                <table class="table table-sm table-borderless">
+                    <tbody>
+                        <tr>
+                            <td class="pb-0">Select size</td>
+                            <td class="pb-0">Quantity</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <select name="size" id="size-select">
+                                    <option value="38">38</option>
+                                    <option value="39">39</option>
+                                    <option value="40">40</option>
+                                    <option value="41">41</option>
+                                    <option value="42">42</option>
+                                    <option value="43">43</option>
+                                    <option value="44">44</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select name="quantity" id="quantity-select">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                {% if product.in_stock == False %}
+                    <h4 class="py-3">Out of Stock</h4>
+                    {% else %}
+                        <button type="button" class="btn btn-dark btn-md mr-1 mt-3 mb-2">Buy now</button>
+                        <button type="button" id="add-button" value="{{product.id}}" class="btn btn-secondary btn-md mt-3 mr-1 mb-2">Add to basket
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
+                                <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/>
+                            </svg>
+                        </button>
+                {% endif%}
                 </form>
             </div>
         </div>
@@ -86,5 +84,24 @@ text-white
     function Previous() {
         window.history.back()
     }
+    $(document).on('click', '#add-button', function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '{% url "basket:basket_add" %}',
+            data: {
+                productid: $('#add-button').val(),
+                quantity: $('#quantity-select option:selected').text(),
+                size: $('#size-select option:selected').text(),
+                csrfmiddlewaretoken: "{{csrf_token}}",
+                action: 'post',
+            },
+            success: function (json) {
+                document.getElementById("basket-count").innerHTML = json.quantity
+            },
+            error: function (xhr, errmsg, err) {}
+        });
+    })
 </script>
+
 {% endblock %}

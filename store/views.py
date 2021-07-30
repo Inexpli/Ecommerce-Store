@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.http import request
 from django.shortcuts import get_object_or_404, redirect, render
 
 from store.forms import UserRegisterForm
@@ -22,7 +23,7 @@ def all(request):
 
 def category(request, slug):
     category_show = get_object_or_404(Category, slug=slug)
-    products = Product.objects.filter(category_id=category_show)
+    products = Product.products.filter(category_id=category_show)
     context = {
         'category_show': category_show,
         'products': products,
@@ -44,33 +45,10 @@ def register(request):
     return render(request, 'store/register.html', {'form': form})
 
 
-def item(request, slug, pk):
+def item(request, slug):
     product = get_object_or_404(Product, slug=slug)
-    productID = Product.objects.get(id=pk)
-
-    if request.method == 'POST':
-        productID = Product.objects.get(id=pk)
-        try:
-            customer = request.user.customer
-        except:
-            device = request.META['REMOTE_ADDR']
-            customer, created = Customer.objects.get_or_create(device=device)
-
-        order, created = Order.objects.get_or_create(
-            customer=customer, complete=False)
-        orderItem, created = OrderItem.objects.get_or_create(
-            order=order, product=productID)
-        orderItem.size = request.POST['size']
-        orderItem.quantity = request.POST['quantity']
-        orderItem.save()
-
-        redirect('store:basket')  # TO FIX
 
     context = {
         'product': product,
     }
     return render(request, 'store/item.html', context)
-
-
-def basket(request):
-    return render(request, 'store/basket.html')

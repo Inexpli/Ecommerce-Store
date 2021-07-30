@@ -1,50 +1,57 @@
 {% extends 'store/base.html' %}
 {% load static %}
-{% block title %}CART TEST{% endblock %}
+{% block title %}Basket{% endblock %}
 {% block nav-home %}
 text-white
 {% endblock %}
 {% block content %}
-	{% if order.orderitem_set.all %}
-	<div class="col-12 px-5 pt-5">
-		<a class="btn btn-outline-dark ml-5" onclick="Previous()">&#x2190; Continue Shopping</a>
+<div class="col-12 px-5 pt-5">
+	<a class="btn btn-outline-dark ml-5" onclick="Previous()">&#x2190; Continue Shopping</a>
+</div>
+<div class="container my-5 p-0 border">
+	<div class="basket-info pt-3 px-3">
+		<h2>Your basket</h2>
+		<h4 class="mb-4">Total: </h4>
 	</div>
-	<div class="container my-5 border">
-		<h2>Your Basket</h2>
-		<h4>Total: {{ orders }}</h4>
-		<div class="row mt-4">
-			<div class="col-9 col-md-8">
-				<section class="items">
-					{% for item in order.orderitem_set.all %}
-						<div class="item border row">
-							<div class="col-4">
-								<img class="img-fluid" src="{{ item.product.image.url }}">
-							</div>
-							<div class="col-6 p-2">
-								<h5>{{item.product.title}}</h5>
-								<br>
-								<h6>Size: {{item.size}}</h6>
-								<h6>Quantity: {{item.quantity}}</h6>
-							</div>
-							<div class="col-2 p-2">
-								<h5>${{item.product.price}}</h5>
-								<button type="submit" id="remove-item" class="btn btn-outline-secondary btn-md mt-3 mr-1 mb-2">Remove
-							</div>
-						</div>
-					{% endfor %}
-				</section>
-			</div>
-			<div class="col-3 col-md-4 border p-2">
-				<h5>PAYMENTS</h5>
-			</div>
+	<div class="row p-3">
+		<div class="col-9 col-md-8">
+			{% for item in basket %}
+			<section class="items">
+				<div class="item border row">
+					<div class="col-4">
+						<img class="img-fluid" src="{{ item.product.image.url }}">
+					</div>
+					<div class="col-6 p-3">
+						<h5>{{item.product.title}}</h5>
+						<br>
+						<h6>Size: {{item.size}}</h6>
+						<h6>Quantity: {{item.quantity}}</h6>
+					</div>
+					<div class="col-2 p-3" style="text-align: end; position:relative;">
+						<h5>${{item.total_price}}</h5>
+						<a href="{{item.product.id}}/remove/" id="cross-remove" class="p-3" title="Remove">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+								class="remove_button" viewBox="0 0 16 16">
+								<path
+									d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+								<path
+									d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+							</svg>
+						</a>
+					</div>
+				</div>
+			</section>
+			{% endfor %}
 		</div>
-	{% else %}
-		<h1 style="text-align:center;padding: 100px">No Items in cart</h1>
-	{% endif %}
+		<div class="col-3 col-md-4 border">
+			.
+		</div>
+		<!-- <h1 style="text-align:center;padding: 100px">No Items in cart</h1> -->
 	</div>
-	<script>
-        function Previous() {
-            window.history.back()
-        }
-    </script>
+</div>
+<script>
+	function Previous() {
+		window.history.back()
+	}
+</script>
 {% endblock content %}

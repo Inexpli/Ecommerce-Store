@@ -1,4 +1,5 @@
 from decimal import Decimal
+from store.views import item
 
 from django.db.models.fields import DecimalField
 
@@ -22,6 +23,16 @@ class Basket():
 
         self.session.modified = True
 
+    # def remove(self, product, quantity):
+    #     product_id = str(product.id)
+
+    #     if product_id in self.basket:
+    #         self.basket[product_id] = {
+    #             'quantity': int(quantity)
+    #         }
+
+    #     self.session.modified = True
+
     def __iter__(self):
         product_ids = self.basket.keys()
         products = Product.products.filter(id__in=product_ids)
@@ -37,3 +48,6 @@ class Basket():
 
     def __len__(self):
         return sum(item['quantity'] for item in self.basket.values())
+
+    def get_total_price(self):
+        return sum(Decimal(item['price']) * item['quantity'] for item in self.basket.values())

@@ -23,3 +23,15 @@ def basket_add(request):
         basket_quantity = basket.__len__()
         response = JsonResponse({'quantity': basket_quantity})
         return response
+
+
+# def basket_remove(request):
+#     basket = Basket(request)
+#     if request.POST.get('action') == 'post':
+#         product_id = int(request.POST.get('productid'))
+#         quantity = int(request.POST.get('quantity'))
+#         product = get_object_or_404(Product, id=product_id)
+#         basket.remove(product=product, quantity=quantity)
+#         basket_quantity = basket.__len__() - quantity
+#         response = JsonResponse({'quantity': basket_quantity})
+#         return response

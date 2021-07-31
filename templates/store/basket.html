@@ -11,7 +11,11 @@ text-white
 <div class="container my-5 p-0 border">
 	<div class="basket-info pt-3 px-3">
 		<h2>Your basket</h2>
-		<h4 class="mb-4">Total: </h4>
+		<h4 class="mb-4">Total: ({% with total_quantity=basket|length %}
+                      {% if total_quantity > 0 %}
+                        {{total_quantity}}
+                      {% endif %}
+                    {% endwith %} Products) {{basket.get_total_price}}$</h4>
 	</div>
 	<div class="row p-3">
 		<div class="col-9 col-md-8">
@@ -25,11 +29,11 @@ text-white
 						<h5>{{item.product.title}}</h5>
 						<br>
 						<h6>Size: {{item.size}}</h6>
-						<h6>Quantity: {{item.quantity}}</h6>
+						<h6 id="qty" value="{{item.quantity}}" >Quantity: {{item.quantity}}</h6>
 					</div>
 					<div class="col-2 p-3" style="text-align: end; position:relative;">
 						<h5>${{item.total_price}}</h5>
-						<a href="{{item.product.id}}/remove/" id="cross-remove" class="p-3" title="Remove">
+						<a id="remove-button" value="{{product.id}}" class="cross-remove p-3" title="Remove"></button>
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
 								class="remove_button" viewBox="0 0 16 16">
 								<path

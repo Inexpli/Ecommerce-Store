@@ -1,7 +1,4 @@
 from decimal import Decimal
-from store.views import item
-
-from django.db.models.fields import DecimalField
 
 from store.models import Product
 
@@ -23,15 +20,13 @@ class Basket():
 
         self.session.modified = True
 
-    # def remove(self, product, quantity):
-    #     product_id = str(product.id)
+    def delete(self, product):
+        product_id = str(product)
 
-    #     if product_id in self.basket:
-    #         self.basket[product_id] = {
-    #             'quantity': int(quantity)
-    #         }
+        if product_id in self.basket:
+            del self.basket[product_id]
 
-    #     self.session.modified = True
+        self.session.modified = True
 
     def __iter__(self):
         product_ids = self.basket.keys()

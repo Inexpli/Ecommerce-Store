@@ -14,7 +14,7 @@ def home(request):
 
 
 def all(request):
-    products = Product.objects.all()
+    products = Product.products.all()
     context = {
         'products': products,
     }

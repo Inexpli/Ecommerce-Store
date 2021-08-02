@@ -199,17 +199,13 @@
             <!--Grid column-->
             <div class="col-lg-3 col-md-6 mb-4 mb-md-0 mt-2">
               <h5 class="text-uppercase">Products</h5>
-    
+              
               <ul class="list-unstyled mb-0">
-                <li>
-                  <a href="#!" class="text-white">Lifestyle Shoes</a>
-                </li>
-                <li>
-                  <a href="#!" class="text-white">Running Shoes</a>
-                </li>
-                <li>
-                  <a href="#!" class="text-white">Sandals</a>
-                </li>
+                {% for c in categories %}
+                  <li>
+                    <a class="text-white" href="{{c.get_absolute_url}}">{{ c.name|title }}</a>
+                  </li>
+                {% endfor %}
               </ul>
             </div>
             <!--Grid column-->

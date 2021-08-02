@@ -80,3 +80,7 @@ svg {
     font-weight: 700;
     padding: 5.2px 19.5px;
 }
+
+#no-items {
+    text-align: center;
+}

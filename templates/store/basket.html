@@ -9,17 +9,19 @@ text-white
 	<a class="btn btn-outline-dark ml-5" onclick="Previous()">&#x2190; Continue Shopping</a>
 </div>
 <div class="container my-5 p-0 border">
-	<div class="basket-info pt-3 px-3">
-		<h2>Your basket</h2>
-		<h4 class="mb-4">Total: ({% with total_quantity=basket|length %}
-                      {% if total_quantity > 0 %}
-                        {{total_quantity}}
-                      {% endif %}
-                    {% endwith %} Products) {{basket.get_total_price}}$</h4>
-	</div>
 	<div class="row p-3">
+		{% with total_quantity=basket|length %}
+		{% if total_quantity > 0 %}
+		<div class="basket-info pt-3 px-3">
+			<h2>Your basket</h2>
+			<h4 class="mb-4">Total: ({% with total_quantity=basket|length %}
+				{% if total_quantity > 0 %}
+				{{total_quantity}}
+				{% endif %}
+				{% endwith %} Products) {{basket.get_total_price}}$</h4>
+		</div>
 		<div class="col-9 col-md-8">
-			{% for item in basket %}
+		{% for item in basket %}
 			<section class="items">
 				<div class="item border row">
 					<div class="col-4">
@@ -29,7 +31,7 @@ text-white
 						<h5>{{item.product.title}}</h5>
 						<br>
 						<h6>Size: {{item.size}}</h6>
-						<h6 id="qty" value="{{item.quantity}}" >Quantity: {{item.quantity}}</h6>
+						<h6 id="qty" value="{{item.quantity}}">Quantity: {{item.quantity}}</h6>
 					</div>
 					<div class="col-2 p-3" style="text-align: end; position:relative;">
 						<h5>${{item.total_price}}</h5>
@@ -45,11 +47,15 @@ text-white
 					</div>
 				</div>
 			</section>
-			{% endfor %}
 		</div>
-		<div class="col-3 col-md-4 border">
-			.
+		<div class="col-3 col-md-4 p-3 border">
+			Payments
 		</div>
+		{% endfor %}
+		{% else %}
+		<h1 id="no-items">No items in basket</h1>
+		{% endif %}
+		{% endwith %}
 		<!-- <h1 style="text-align:center;padding: 100px">No Items in cart</h1> -->
 	</div>
 </div>
@@ -57,23 +63,23 @@ text-white
 	function Previous() {
 		window.history.back()
 	}
-	
+
 	$(document).on('click', '.remove-button', function (e) {
-        e.preventDefault();
+		e.preventDefault();
 		console.log($('.remove-button').val())
-        $.ajax({
-            type: 'POST',
-            url: '{% url "basket:basket_delete" %}',
-            data: {
-                productid: $('.remove-button').val(),
-                csrfmiddlewaretoken: "{{csrf_token}}",
-                action: 'post',
-            },
-            success: function (json) {
-    
-            },
-            error: function (xhr, errmsg, err) {}
-        });
-    })
+		$.ajax({
+			type: 'POST',
+			url: '{% url "basket:basket_delete" %}',
+			data: {
+				productid: $('.remove-button').val(),
+				csrfmiddlewaretoken: "{{csrf_token}}",
+				action: 'post',
+			},
+			success: function (json) {
+
+			},
+			error: function (xhr, errmsg, err) {}
+		});
+	})
 </script>
 {% endblock content %}

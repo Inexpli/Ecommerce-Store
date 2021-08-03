@@ -59,15 +59,16 @@ svg {
     background: none;
     right: 0;
     position: absolute;
-    padding-bottom: 2px;
+    margin-bottom: 17px !important;
 }
 
 .edit-button {
     border: none;
     background: none;
     position: absolute;
-    right: 30px;
+    right: 40px;
     bottom: 0;
+    color: black;
 }
 
 .basket-svg {
@@ -89,4 +90,11 @@ svg {
 
 #no-items {
     text-align: center;
+}
+
+#modal-price {
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    padding-right: 1rem;
 }

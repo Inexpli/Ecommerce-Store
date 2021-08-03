@@ -28,6 +28,17 @@ class Basket():
 
         self.session.modified = True
 
+    def update(self, product, quantity, size):
+        product_id = str(product)
+        product_quantity = quantity
+        product_size = size
+
+        if product_id in self.basket:
+            self.basket[product_id]['quantity'] = int(product_quantity)
+            self.basket[product_id]['size'] = int(product_size)
+
+        self.session.modified = True
+
     def __iter__(self):
         product_ids = self.basket.keys()
         products = Product.products.filter(id__in=product_ids)

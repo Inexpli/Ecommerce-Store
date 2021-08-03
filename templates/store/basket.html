@@ -31,11 +31,12 @@ text-white
 					<div class="col-6 p-3">
 						<h5 id="productTitle{{item.product.id}}">{{item.product.title}}</h5>
 						<br>
-						<h6>Size: {{item.size}}</h6>
-						<h6 id="qty" value="{{item.quantity}}">Quantity: {{item.quantity}}</h6>
+						<h6 id="size{{item.product.id}}" data-index="{{item.size}}">Size: {{item.size}}</h6>
+						<h6 id="qty{{item.product.id}}" data-index="{{item.quantity}}">Quantity: {{item.quantity}}</h6>
 					</div>
 					<div class="col-2 p-3" style="text-align: end; position:relative;">
-						<h5 id="productPrc{{item.product.id}}" class="text-muted">${{item.total_price}}</h5>
+						<h5 id="productPrc{{item.product.id}}" data-index="{{item.price}}" class="text-muted">{{item.quantity}} x ${{item.price}}</h5>
+						<h5 id="totalPrc{{item.product.id}}" data-index="{{item.total_price}}" class="text-muted">${{item.total_price}}</h5>
 						<button type="button" class="edit-button m-3" data-bs-toggle="modal" data-index="{{item.product.id}}" data-bs-target="#exampleModal" title="Edit">
 							<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
 								class="basket-svg" viewBox="0 0 16 16" class="note-edit">
@@ -67,20 +68,20 @@ text-white
 													<tr>
 														<td>
 															<select name="size" id="edit-size">
-																<option value="38">38</option>
-																<option value="39">39</option>
-																<option value="40">40</option>
-																<option value="41">41</option>
-																<option value="42">42</option>
-																<option value="43">43</option>
-																<option value="44">44</option>
+																<option id="size38" value="38">38</option>
+																<option id="size39" value="39">39</option>
+																<option id="size40" value="40">40</option>
+																<option id="size41" value="41">41</option>
+																<option id="size42" value="42">42</option>
+																<option id="size43" value="43">43</option>
+																<option id="size44" value="44">44</option>
 															</select>
 														</td>
 														<td>
-															<select name="quantity" id="edit-quantity" style="margin-left: 0;">
-																<option value="1">1</option>
-																<option value="2">2</option>
-																<option value="3">3</option>
+															<select name="quantity" id="edit-quantity" style="margin-left: 0;" onchange="AutoPrice()">
+																<option id="opt1" value="1">1</option>
+																<option id="opt2" value="2">2</option>
+																<option id="opt3" value="3">3</option>
 															</select>
 														</td>
 													</tr>
@@ -125,6 +126,13 @@ text-white
 		window.history.back()
 	}
 
+	function AutoPrice() {
+		price = $(`#productPrc${product}`).data('index');
+		selector = document.getElementById('edit-quantity');
+		selected_quantity = selector.options[selector.selectedIndex].text;
+		document.getElementById('modal-price').innerText = "$" + price * selected_quantity;
+	}
+
 	$(document).on('click', '.edit-button', function (e) {
 		e.preventDefault();
 		product = $(this).data('index');
@@ -133,8 +141,12 @@ text-white
 		document.getElementById('title').innerText = title;
 		img = document.getElementById(`productImg${product}`).src;
 		document.getElementById('img').src = img;
-		price = document.getElementById(`productPrc${product}`).innerText;
-		document.getElementById('modal-price').innerText = price;
+		price = $(`#totalPrc${product}`).data('index');
+		document.getElementById('modal-price').innerText = "$" + price;
+		selected_quantity = $(`#qty${product}`).data('index');
+		document.getElementById(`opt${selected_quantity}`).selected = true;
+		selected_size = $(`#size${product}`).data('index');
+		document.getElementById(`size${selected_size}`).selected = true;
 	})
 
 	$(document).on('click', '#update', function (e) {

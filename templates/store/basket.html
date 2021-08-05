@@ -28,14 +28,15 @@ text-white
 					<div class="col-4">
 						<img class="img-fluid" id="productImg{{item.product.id}}" src="{{ item.product.image.url }}">
 					</div>
-					<div class="col-6 p-3">
+					<div class="col-5 p-3">
 						<h5 id="productTitle{{item.product.id}}">{{item.product.title}}</h5>
 						<br>
 						<h6 id="size{{item.product.id}}" data-index="{{item.size}}">Size: {{item.size}}</h6>
 						<h6 id="qty{{item.product.id}}" data-index="{{item.quantity}}">Quantity: {{item.quantity}}</h6>
 					</div>
-					<div class="col-2 p-3" style="text-align: end; position:relative;">
-						<h5 id="productPrc{{item.product.id}}" data-index="{{item.price}}" class="text-muted">{{item.quantity}} x ${{item.price}}</h5>
+					<div class="col-3 p-3" style="text-align: end; position:relative;">
+						<h5 id="productPrc{{item.product.id}}" data-index="{{item.price}}" class="text-muted price-info">{{item.quantity}} x ${{item.price}}</h5>
+						<hr style="margin-left: auto; max-width: 100px;">
 						<h5 id="totalPrc{{item.product.id}}" data-index="{{item.total_price}}" class="text-muted">${{item.total_price}}</h5>
 						<button type="button" class="edit-button m-3" data-bs-toggle="modal" data-index="{{item.product.id}}" data-bs-target="#exampleModal" title="Edit">
 							<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"

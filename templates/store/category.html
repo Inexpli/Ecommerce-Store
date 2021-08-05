@@ -30,7 +30,7 @@ text-secondary
             <a href="{% url 'store:item' product.slug %}"><img src="{{ product.image.url }}" class="img-fluid" role="img"
                 preserveAspectRatio="xMidYMid slice" focusable="false"></a>
             <div class="card-body">
-              <h4>{{ product.title|title }}</h4>
+              <h4>{{ product.title }}</h4>
               <p class="card-text">
                 {% if product.in_stock == False %}
                   Out of Stock

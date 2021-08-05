@@ -42,7 +42,7 @@
                   Products
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="productsDropdown">
-                   <li><a class="dropdown-item" href="/category/all">All</a></li>
+                   <li><a class="dropdown-item" href="/category/all">All Products</a></li>
                     {% for c in categories %}
                       <li>
                           <a class="dropdown-item" href="{{c.get_absolute_url}}">{{ c.name|title }}</a>

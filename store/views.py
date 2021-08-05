@@ -14,7 +14,7 @@ def home(request):
 
 
 def all(request):
-    products = Product.products.all()
+    products = Product.objects.all()
     context = {
         'products': products,
     }
@@ -23,7 +23,7 @@ def all(request):
 
 def category(request, slug):
     category_show = get_object_or_404(Category, slug=slug)
-    products = Product.products.filter(category_id=category_show)
+    products = Product.objects.filter(category_id=category_show)
     context = {
         'category_show': category_show,
         'products': products,

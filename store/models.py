@@ -1,6 +1,5 @@
-from django.contrib.auth.models import User
 from django.db import models
-from django.db.models.fields import CharField, EmailField, SlugField
+from django.db.models.fields import CharField, SlugField
 from django.urls import reverse
 
 
@@ -34,6 +33,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=5, decimal_places=2)
     created = models.DateTimeField(auto_now=True)
     slug = models.SlugField(max_length=255)
+    objects = models.Manager()
     products = ProductManager()
 
     class Meta:

@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'store',
     'basket',
     'crispy_forms',
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +57,6 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'store.context_processors.categories',
                 'basket.context_processors.basket',
-                # 'store.context_processors.basket',
             ],
         },
     },
@@ -130,8 +130,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-# Login Redirect
-
-LOGIN_REDIRECT_URL = '/'
+# Custom user model
+AUTH_USER_MODEL = 'account.UserBase'
+LOGIN_REDIRECT_URL = '/account/dashboard'
+LOGIN_URL = 'account/login'
 LOGOUT_REDIRECT_URL = '/'
-#LOGIN_URL = 'login'

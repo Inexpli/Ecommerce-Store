@@ -1,12 +1,9 @@
-from django.contrib import messages
 from django.http import request
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, render
 
 from store.forms import UserRegisterForm
 
 from .models import *
-
-# from django.contrib.auth.decorators import login_required
 
 
 def home(request):
@@ -29,20 +26,6 @@ def category(request, slug):
         'products': products,
     }
     return render(request, 'store/category.html', context)
-
-
-def register(request):
-    if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            messages.success(request, f'Account {username} has been created!')
-            return redirect('/login')
-    else:
-        form = UserRegisterForm()
-
-    return render(request, 'store/register.html', {'form': form})
 
 
 def item(request, slug):

@@ -98,3 +98,7 @@ svg {
     position: absolute;
     padding-right: 1rem;
 }
+
+.asteriskField {
+    color: red;
+}

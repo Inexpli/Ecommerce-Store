@@ -122,12 +122,10 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Media
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Crispy Forms
-
 #CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Custom user model
@@ -135,3 +133,6 @@ AUTH_USER_MODEL = 'account.UserBase'
 LOGIN_REDIRECT_URL = '/account/dashboard'
 LOGIN_URL = 'account/login'
 LOGOUT_REDIRECT_URL = '/'
+
+# Authentication token config
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

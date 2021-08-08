@@ -13,12 +13,13 @@
                     <div class="row d-flex align-items-center justify-content-center">
                         <div class="col-md-6">
                             <form class="card px-5 py-5" action="." method="post">
+                                {% csrf_token %}
                                 <h3 class="mb-2 font-weight-bold text-center pb-4">Create an account</h3>
                                 {% if form.errors %}
                                 <p>Please correct the following errors:</p>
                                 {% for field in form %}
                                 {% if field.errors %}
-                                <div class="alert alert-primary" role="alert">
+                                <div class="alert alert-danger" role="alert">
                                     {{ field.label }}: {{ field.errors|striptags }}
                                 </div>
                                 {% endif %}
@@ -28,7 +29,10 @@
                                 <div class="form-input pb-2">{{ form.email }}</div>
                                 <div class="form-input pb-2">{{ form.password1 }}</div>
                                 <div class="form-input pb-2">{{ form.password2 }}</div>
-                                <div class="form-check"> <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked> <label class="form-check-label" for="flexCheckChecked"> I agree all the statements </label> </div> <button class="btn btn-primary mt-4 signup">Register</button>
+                                <div class="form-check"> <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked> <label class="form-check-label" for="flexCheckChecked"> I agree all the statements </label> </div> 
+                                <div class="text-center">
+                                    <button class="btn btn-primary mt-4 signup" type="submit" style="width: 150px;">Register</button>
+                                </div>
                                 <div class="text-center mt-4"> <span>Already a member?</span> <a href="#" class="text-decoration-none">Login</a> </div>
                             </form>
                         </div>

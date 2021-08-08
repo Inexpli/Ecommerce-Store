@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 from .models import UserBase
 
 
@@ -15,3 +16,24 @@ class RegistrationForm(forms.ModelForm):
     class Meta:
         model = UserBase
         fields = ('user_name', 'email',)
+
+    def clean_username(self):
+        user_name = self.cleaned_data('user_name').lower()
+        ur = UserBase.objects.filter(user_name=user_name)
+        if ur.count():
+            raise forms.ValidationError(
+                {'Username': 'Username already exists'})
+        return user_name
+
+    def clean_password(self):
+        cd = self.cleaned_data
+        if cd['password1'] != cd['password2']:
+            raise forms.ValidationError('Passwords do not match')
+        return cd['password2']
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if UserBase.objects.filter(email=email).exists():
+            raise forms.ValidationError(
+                'Account with this email already exists')
+        return email

@@ -1,8 +1,6 @@
 from django.http import request
 from django.shortcuts import get_object_or_404, render
 
-from store.forms import UserRegisterForm
-
 from .models import *
 
 

@@ -1,3 +1,5 @@
+from django.contrib.auth import tokens
+from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from .forms import RegistrationForm
 from django.contrib.sites.shortcuts import get_current_site
@@ -34,7 +36,26 @@ def account_register(request):
                 'token': account_activation_token.make_token(user),
             })
             user.email_user(subject=subject, message=message)
-
+            return HttpResponse('Activation sent')
     else:
         registerForm = RegistrationForm()
     return render(request, 'account/register.html', {'form': registerForm})
+
+
+def account_activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = UserBase.objects.get(pk=uid)
+    except:
+        pass
+
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        return redirect('account:complete')
+    else:
+        return render(request, 'account/activation_invalid.html')
+
+
+def registration_complete(request):
+    return render(request, 'account/registration_complete.html')

@@ -4,6 +4,7 @@ from django.db import models
 from django_countries.fields import CountryField
 from django.utils.translation import gettext_lazy as _
 from django.db import models
+from django.core.mail import send_mail
 
 
 class CustomAccountManager(BaseUserManager):
@@ -37,7 +38,7 @@ class UserBase(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
     user_name = models.CharField(max_length=150, unique=True)
     first_name = models.CharField(max_length=150, blank=True)
-    country = CountryField()
+    country = CountryField(blank=True)
     phone_number = models.CharField(max_length=15, blank=True)
     postcode = models.CharField(max_length=12, blank=True)
     address_line1 = models.CharField(max_length=150, blank=True)
@@ -57,6 +58,15 @@ class UserBase(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = 'Accounts'
         verbose_name_plural = 'Accounts'
+
+    def email_user(self, subject, message):
+        send_mail(
+            subject,
+            message,
+            'l@1.com',
+            [self.email],
+            fail_silently=False,
+        )
 
     def __str__(self):
         return self.user_name

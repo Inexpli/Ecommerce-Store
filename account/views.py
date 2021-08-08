@@ -1,4 +1,4 @@
-from django.contrib.auth import tokens
+from core.settings import EMAIL_HOST_USER
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from .forms import RegistrationForm
@@ -6,7 +6,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_bytes, force_text
-
+from django.core.mail import EmailMessage
 
 from .forms import RegistrationForm
 from .models import UserBase
@@ -35,7 +35,13 @@ def account_register(request):
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': account_activation_token.make_token(user),
             })
-            user.email_user(subject=subject, message=message)
+            email = EmailMessage(
+                subject,
+                message,
+                EMAIL_HOST_USER,
+                [user.email],
+            )
+            email.send(fail_silently=False)
             return HttpResponse('Activation sent')
     else:
         registerForm = RegistrationForm()

@@ -130,9 +130,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Custom user model
 AUTH_USER_MODEL = 'account.UserBase'
-LOGIN_REDIRECT_URL = '/account/dashboard'
+LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = 'account/login'
-LOGOUT_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/account/login'
 
 # Authentication token config
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

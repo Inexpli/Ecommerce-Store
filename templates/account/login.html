@@ -23,6 +23,7 @@
                                     <button class="btn btn-primary mt-4 signup" type="submit" style="width: 150px;">Login</button>
                                 </div>
                                 <div class="text-center mt-4"> <span>Don't have an account yet?</span> <a href="{% url 'account:register' %}" class="text-decoration-none">Register</a> </div>
+                                <div class="text-center mt-4"><a href="{% url 'account:password_reset_request' %}">Forget password?</a></div>
                             </form>
                         </div>
                     </div>

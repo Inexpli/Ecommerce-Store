@@ -38,14 +38,15 @@ class CustomAccountManager(BaseUserManager):
 
 class UserBase(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
-    username = models.CharField(max_length=150, unique=True)
-    first_name = models.CharField(max_length=150, blank=True)
+    username = models.CharField(max_length=20, unique=True)
+    first_name = models.CharField(max_length=30, blank=True)
+    last_name = models.CharField(max_length=30, blank=True)
     country = CountryField(blank=True)
-    phone_number = models.CharField(max_length=15, blank=True)
+    phone_number = models.CharField(max_length=9, blank=True)
     postcode = models.CharField(max_length=12, blank=True)
-    address_line1 = models.CharField(max_length=150, blank=True)
-    address_line2 = models.CharField(max_length=150, blank=True)
-    town_city = models.CharField(max_length=150, blank=True)
+    address_line1 = models.CharField(max_length=50, blank=True)
+    address_line2 = models.CharField(max_length=50, blank=True)
+    town = models.CharField(max_length=50, blank=True)
     # User_status
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)

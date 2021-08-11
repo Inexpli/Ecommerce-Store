@@ -7,8 +7,11 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_bytes, force_text
 from django.core.mail import EmailMessage
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.db import IntegrityError
 
-from .forms import RegistrationForm
+from .forms import RegistrationForm, UserUpdateForm
 from .models import UserBase
 from .token import account_activation_token
 
@@ -42,7 +45,7 @@ def account_register(request):
                 [user.email],
             )
             email.send(fail_silently=False)
-            return HttpResponse('Activation sent')
+            return render(request, 'account/activation_sent.html', {'email': user.email})
     else:
         registerForm = RegistrationForm()
     return render(request, 'account/register.html', {'form': registerForm})
@@ -65,3 +68,32 @@ def account_activate(request, uidb64, token):
 
 def registration_complete(request):
     return render(request, 'account/registration_complete.html')
+
+
+@login_required
+def account_dashboard(request):
+    return render(request, 'account/dashboard.html')
+
+
+@login_required
+def account_profile(request):
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        if u_form.is_valid():
+            user = u_form.save(commit=False)
+            try:
+                user.user_name = (u_form.cleaned_data['user_name'])
+                user.email = (u_form.cleaned_data['email']).lower()
+                user.save()
+                return redirect('account:profile')
+
+            except IntegrityError:
+                messages.error(
+                    request, 'This username or email is already in use')
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+
+    context = {
+        'u_form': u_form,
+    }
+    return render(request, 'account/profile.html', context)

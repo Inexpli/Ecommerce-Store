@@ -1,7 +1,8 @@
 from django.contrib.auth import views as auth_views
 from django.urls import path
-from .forms import (UserLoginForm)
+
 from . import views
+from .forms import UserLoginForm
 
 app_name = 'account'
 
@@ -13,4 +14,6 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(redirect_authenticated_user=True, template_name='account/login.html',
                                                 form_class=UserLoginForm), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('dashboard/', views.account_dashboard, name='dashboard'),
+    path('profile/', views.account_profile, name='profile'),
 ]

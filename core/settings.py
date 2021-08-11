@@ -29,7 +29,7 @@ INSTALLED_APPS = [
     'store',
     'basket',
     'account',
-    # 'crispy_forms',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -126,10 +126,16 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Crispy Forms
-#CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Custom user model
 AUTH_USER_MODEL = 'account.UserBase'
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.AllowAllUsersModelBackend',
+    'account.backends.CaseInsensitiveModelBackend',
+)
+
+# Login configuration
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = 'account/login'
 LOGOUT_REDIRECT_URL = '/account/login'

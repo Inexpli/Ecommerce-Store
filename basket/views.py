@@ -9,7 +9,7 @@ from .basket import Basket
 
 def basket(request):
     basket = Basket(request)
-    return render(request, 'store/basket.html', {'basket': basket})
+    return render(request, 'basket/basket.html', {'basket': basket})
 
 
 def basket_add(request):

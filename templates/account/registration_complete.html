@@ -7,6 +7,6 @@
 {% block content %}
 <div class="container mx-auto text-center">
     <h1 class="mt-5 mb-5">Activation completed!</h1>
-    <h3 class="mt-4">Now, you can <a href="">login</a> to your account.</h3>
+    <h3 class="mt-4">Now, you can <a href="{% url 'account:login' %}">login</a> to your account.</h3>
 </div>
 {% endblock %}

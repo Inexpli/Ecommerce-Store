@@ -1,0 +1,27 @@
+{% extends '../store/base.html' %}
+{% load static %}
+{% block title %}Register{% endblock %}
+{% block nav-home %}
+    text-white
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row no-gutter">
+        <div class="col-md-12">
+            <div class="login d-flex align-items-center py-5">
+                <div class="container my-5 border rounded p-3">
+                    <div class="row d-flex align-items-center justify-content-center">
+                        <div class="col-md-6 text-center">
+                            <h3 class="py-2">Please verify your email</h3>
+                            <h6 class="pb-4">We sent email to {{email}}</h6>
+                            <h6>Just click on the link in that email to complete your signup.
+                                If you don't see it, you may need to check your spam folder.
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

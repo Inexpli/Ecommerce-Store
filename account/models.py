@@ -1,14 +1,12 @@
-from django.contrib.auth.models import (
-    AbstractBaseUser, BaseUserManager, PermissionsMixin, User)
+from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
+                                        PermissionsMixin)
 from django.db import models
-from django_countries.fields import CountryField
 from django.utils.translation import gettext_lazy as _
-from django.db import models
-from django.core.mail import send_mail
+from django_countries.fields import CountryField
 
 
 class CustomAccountManager(BaseUserManager):
-    def create_superuser(self, email, user_name, password, **other_fields):
+    def create_superuser(self, email, username, password, **other_fields):
         other_fields.setdefault('is_staff', True)
         other_fields.setdefault('is_superuser', True)
         other_fields.setdefault('is_active', True)
@@ -20,15 +18,19 @@ class CustomAccountManager(BaseUserManager):
             raise ValueError(
                 'Superuser must be assigned to is_superuser=True.')
 
-        return self.create_user(email, user_name, password, **other_fields)
+        return self.create_user(email=self.normalize_email(email), username=username, password=password, **other_fields)
 
-    def create_user(self, email, user_name, password, **other_fields):
+    def create_user(self, email, username, password, **other_fields):
 
         if not email:
             raise ValueError(_('You must provide an email address'))
 
+        if not username:
+            raise ValueError(_('You must provide a username'))
+
         email = self.normalize_email(email)
-        user = self.model(email=email, user_name=user_name, **other_fields)
+        user = self.model(email=self.normalize_email(email),
+                          username=username, **other_fields)
         user.set_password(password)
         user.save()
         return user
@@ -36,7 +38,7 @@ class CustomAccountManager(BaseUserManager):
 
 class UserBase(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
-    user_name = models.CharField(max_length=150, unique=True)
+    username = models.CharField(max_length=150, unique=True)
     first_name = models.CharField(max_length=150, blank=True)
     country = CountryField(blank=True)
     phone_number = models.CharField(max_length=15, blank=True)
@@ -53,20 +55,11 @@ class UserBase(AbstractBaseUser, PermissionsMixin):
     objects = CustomAccountManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['user_name']
+    REQUIRED_FIELDS = ['username']
 
     class Meta:
         verbose_name = 'Accounts'
         verbose_name_plural = 'Accounts'
 
-    def email_user(self, subject, message):
-        send_mail(
-            subject,
-            message,
-            'l@1.com',
-            [self.email],
-            fail_silently=False,
-        )
-
     def __str__(self):
-        return self.user_name
+        return self.username

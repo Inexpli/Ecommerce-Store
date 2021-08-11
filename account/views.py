@@ -1,17 +1,14 @@
-from core.settings import EMAIL_HOST_USER
-from django.http.response import HttpResponse
-from django.shortcuts import redirect, render
-from .forms import RegistrationForm
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.sites.shortcuts import get_current_site
-from django.template.loader import render_to_string
-from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from django.utils.encoding import force_bytes, force_text
 from django.core.mail import EmailMessage
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.db import IntegrityError
+from django.shortcuts import redirect, render
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 
-from .forms import RegistrationForm, UserUpdateForm
+from core.settings import EMAIL_HOST_USER
+
+from .forms import RegistrationForm, UserEditForm
 from .models import UserBase
 from .token import account_activation_token
 
@@ -66,8 +63,13 @@ def account_activate(request, uidb64, token):
         return render(request, 'account/activation_invalid.html')
 
 
+def user_active_check(user):
+    return user.is_active == True
+
+
+@user_passes_test(user_active_check)
 def registration_complete(request):
-    return render(request, 'account/registration_complete.html')
+    return render(request, 'account/activation_complete.html')
 
 
 @login_required
@@ -78,22 +80,11 @@ def account_dashboard(request):
 @login_required
 def account_profile(request):
     if request.method == 'POST':
-        u_form = UserUpdateForm(request.POST, instance=request.user)
-        if u_form.is_valid():
-            user = u_form.save(commit=False)
-            try:
-                user.user_name = (u_form.cleaned_data['user_name'])
-                user.email = (u_form.cleaned_data['email']).lower()
-                user.save()
-                return redirect('account:profile')
-
-            except IntegrityError:
-                messages.error(
-                    request, 'This username or email is already in use')
+        user_form = UserEditForm(instance=request.user, data=request.POST)
+        if user_form.is_valid():
+            user = user_form.save(commit=False)
+            user.username = request.user.username
+            user_form.save()
     else:
-        u_form = UserUpdateForm(instance=request.user)
-
-    context = {
-        'u_form': u_form,
-    }
-    return render(request, 'account/profile.html', context)
+        user_form = UserEditForm(instance=request.user)
+    return render(request, 'account/profile.html', {'form': user_form})

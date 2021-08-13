@@ -50,7 +50,7 @@ text-secondary
 						<h6>Color: {{item.product.color}}</h6>
 					</div>
 					<div class="col-5 p-3" style="text-align: end; position:relative;">
-						<h5 id="productPrc{{item.product.id}}" data-index="{{item.price}}" class="text-muted price-info">{{item.quantity}} x ${{item.price}}</h5>
+						<h5 id="productPrc{{item.product.id}}" data-index="{{item.price}}" class="text-muted price-info">{{item.quantity}} x ${{item.product.price}}</h5>
 						<hr style="margin-left: auto; max-width: 100px;">
 						<h5 id="totalPrc{{item.product.id}}" data-index="{{item.total_price}}" class="text-muted">${{item.total_price}}</h5>
 						<button type="button" class="edit-button m-3" data-bs-toggle="modal" data-index="{{item.product.id}}" data-bs-target="#exampleModal" title="Edit">

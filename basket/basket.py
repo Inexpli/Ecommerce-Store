@@ -48,7 +48,7 @@ class Basket():
             basket[str(product.id)]['product'] = product
 
         for item in basket.values():
-            item['price'] = Decimal(item['price'])
+            item['price'] = float(item['price'])
             item['total_price'] = item['price'] * item['quantity']
             yield item
 
@@ -56,4 +56,4 @@ class Basket():
         return sum(item['quantity'] for item in self.basket.values())
 
     def get_total_price(self):
-        return sum(Decimal(item['price']) * item['quantity'] for item in self.basket.values())
+        return sum(float(item['price']) * item['quantity'] for item in self.basket.values())

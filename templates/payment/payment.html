@@ -8,13 +8,13 @@
             <div class="login d-flex align-items-center py-5">
                 <div class="container mt-5 mb-5">
                     <div class="row d-flex align-items-center justify-content-center">
-                        <div class="col-md-6">
+                        <div class="col-md-6" id="payment-form">
                             <h4>Billing address</h4>
                             <div id="card-errors" class="a" role="alert"></div>
                             <form>
                                 <div class="row g-3">
                                     <div class="col-sm-7">
-                                        <label for="firstName" class="form-label">Customer Name</label>
+                                        <label for="firstName" class="form-label">Customer Full Name</label>
                                         <input type="text" class="form-control" id="custName" placeholder="" required>
                                         <div class="invalid-feedback">
                                             Valid first name is required.
@@ -47,20 +47,20 @@
                                         <label for="country" class="form-label">Country</label>
                                         <select class="form-select" id="country" required>
                                             <option value="">Choose...</option>
-                                            <option>United States</option>
+                                            <option>Poland</option>
                                         </select>
                                         <div class="invalid-feedback">
                                             Please select a valid country.
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <label for="state" class="form-label">State</label>
-                                        <select class="form-select" id="state" required>
+                                        <label for="custTown" class="form-label">Town</label>
+                                        <select class="form-select" id="custTown" required>
                                             <option value="">Choose...</option>
-                                            <option>California</option>
+                                            <option>Warsaw</option>
                                         </select>
                                         <div class="invalid-feedback">
-                                            Please provide a valid state.
+                                            Please provide a valid town.
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -78,7 +78,7 @@
                                     <!-- Payment elements will appear here -->
                                 </div>
                                 <hr class="my-4">
-                                <button id="submit" class="btn btn-primary w-100 fw-bold"
+                                <button id="submit" class="btn btn-outline-success w-100 fw-bold"
                                     data-secret="{{ client_secret }}">Pay</button>
                             </form>
                         </div>
@@ -88,4 +88,9 @@
         </div>
     </div>
 </div>
+<script>
+    var CSRF_TOKEN = '{{ csrf_token }}';
+</script>
+<script src="https://js.stripe.com/v3/"></script>
+<script src="{% static 'payment/index.js' %}" data-rel-js></script>
 {% endblock %}

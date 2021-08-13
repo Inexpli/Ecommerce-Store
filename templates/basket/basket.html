@@ -8,12 +8,12 @@ text-secondary
 <div class="col-12 px-5 pt-5">
 	<a class="btn btn-outline-dark ml-5" onclick="Previous()">&#x2190; Continue Shopping</a>
 </div>
+{% with total_quantity=basket|length %}
 <div class="container my-5 p-3 border">
 	<div class="row p-3">
+		{% if total_quantity > 0 %}
 		<div class="row mb-4">
 			<div class="col-6">
-				{% with total_quantity=basket|length %}
-				{% if total_quantity > 0 %}
 				<div class="basket-info">
 					<h2>Your basket</h2>
 					<h4>Total: <span class="text-muted">({% with total_quantity=basket|length %}
@@ -25,12 +25,15 @@ text-secondary
 				</div>
 			</div>
 			<div class="col-2"></div>
-			<div class="col-2 text-center">
-				<button class="btn btn-outline-danger" type="button">Clear basket</button>
+			<div class="col-2 text-center" style="position: relative;">
+				<button class="btn btn-outline-danger" type="button" style="width: 100px; height: 70px; position: absolute; top: 50%; right:20%; -ms-transform: translateY(-50%); transform: translateY(-50%);">Clear basket</button>
 			</div>
-			<div class="col-2 text-center">
-				<button class="btn btn-outline-success" type="button">Checkout</button>
+			<div class="col-2 text-center" style="position: relative;">
+				<button class="btn btn-outline-success" type="button" onclick="location.href='/payment/'" style="width: 100px; height: 70px; position: absolute; top: 50%; right:20%; -ms-transform: translateY(-50%); transform: translateY(-50%);">Checkout</button>
 			</div>
+		{% else %}
+			<h3 class="text-center">Your basket is empty, <a href="{% url 'store:all' %}">do something with it</a></h3>
+		{% endif %}
 		</div>
 		<div class="col-12">
 			{% for item in basket %}
@@ -125,9 +128,6 @@ text-secondary
 			</section>
 			{% endfor %}
 		</div>
-		{% else %}
-		<h1 id="no-items">No items in basket</h1>
-		{% endif %}
 		{% endwith %}
 	</div>
 </div>
@@ -195,4 +195,4 @@ text-secondary
 		});
 	})
 </script>
-{% endblock content %}
+{% endblock %}

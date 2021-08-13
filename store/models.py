@@ -26,6 +26,7 @@ class Product(models.Model):
         Category, related_name='product', on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
+    color = models.CharField(max_length=20, blank=True)
     image = models.ImageField(upload_to='images/')
     in_stock = models.BooleanField(default=False)
     promotion = models.BooleanField(default=False)

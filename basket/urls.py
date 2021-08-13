@@ -1,7 +1,5 @@
 from django.urls import path
 
-import basket
-
 from . import views
 
 app_name = 'basket'

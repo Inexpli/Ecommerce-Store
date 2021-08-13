@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,6 +30,7 @@ INSTALLED_APPS = [
     'store',
     'basket',
     'account',
+    'payment',
     'crispy_forms',
 ]
 
@@ -137,8 +139,8 @@ AUTHENTICATION_BACKENDS = (
 
 # Login configuration
 LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = 'account/login'
-LOGOUT_REDIRECT_URL = '/account/login'
+LOGIN_URL = reverse_lazy('account:login')
+LOGOUT_REDIRECT_URL = reverse_lazy('account:login')
 
 # Authentication token config
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

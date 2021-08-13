@@ -8,24 +8,35 @@ text-secondary
 <div class="col-12 px-5 pt-5">
 	<a class="btn btn-outline-dark ml-5" onclick="Previous()">&#x2190; Continue Shopping</a>
 </div>
-<div class="container my-5 p-0 border">
+<div class="container my-5 p-3 border">
 	<div class="row p-3">
-		{% with total_quantity=basket|length %}
-		{% if total_quantity > 0 %}
-		<div class="basket-info pt-1">
-			<h2>Your basket</h2>
-			<h4 class="mb-4">Total: <span class="text-muted">({% with total_quantity=basket|length %}
-					{% if total_quantity > 0 %}
-					{{total_quantity}}
-					{% endif %}
-					{% endwith %} {% if total_quantity > 1 %} Products {% else %} Product {% endif %})
-					{{basket.get_total_price}}$</span></h4>
+		<div class="row mb-4">
+			<div class="col-6">
+				{% with total_quantity=basket|length %}
+				{% if total_quantity > 0 %}
+				<div class="basket-info">
+					<h2>Your basket</h2>
+					<h4>Total: <span class="text-muted">({% with total_quantity=basket|length %}
+							{% if total_quantity > 0 %}
+							{{total_quantity}}
+							{% endif %}
+							{% endwith %} {% if total_quantity > 1 %} Products {% else %} Product {% endif %})
+							{{basket.get_total_price}}$</span></h4>
+				</div>
+			</div>
+			<div class="col-2"></div>
+			<div class="col-2 text-center">
+				<button class="btn btn-outline-danger" type="button">Clear basket</button>
+			</div>
+			<div class="col-2 text-center">
+				<button class="btn btn-outline-success" type="button">Checkout</button>
+			</div>
 		</div>
-		<div class="col-9 col-md-8">
+		<div class="col-12">
 			{% for item in basket %}
 			<section class="items">
 				<div class="item border row">
-					<div class="col-4">
+					<div class="col-2">
 						<img class="img-fluid" id="productImg{{item.product.id}}" src="{{ item.product.image.url }}">
 					</div>
 					<div class="col-5 p-3">
@@ -33,8 +44,9 @@ text-secondary
 						<br>
 						<h6 id="size{{item.product.id}}" data-index="{{item.size}}">Size: {{item.size}}</h6>
 						<h6 id="qty{{item.product.id}}" data-index="{{item.quantity}}">Quantity: {{item.quantity}}</h6>
+						<h6>Color: {{item.product.color}}</h6>
 					</div>
-					<div class="col-3 p-3" style="text-align: end; position:relative;">
+					<div class="col-5 p-3" style="text-align: end; position:relative;">
 						<h5 id="productPrc{{item.product.id}}" data-index="{{item.price}}" class="text-muted price-info">{{item.quantity}} x ${{item.price}}</h5>
 						<hr style="margin-left: auto; max-width: 100px;">
 						<h5 id="totalPrc{{item.product.id}}" data-index="{{item.total_price}}" class="text-muted">${{item.total_price}}</h5>
@@ -112,9 +124,6 @@ text-secondary
 				</div>
 			</section>
 			{% endfor %}
-		</div>
-		<div class="col-3 col-md-4 p-3 border">
-			Payments
 		</div>
 		{% else %}
 		<h1 id="no-items">No items in basket</h1>

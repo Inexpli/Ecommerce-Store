@@ -41,8 +41,8 @@ text-secondary
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   <button type="button" class="btn btn-sm btn-outline-secondary btn-product">Add to wishlist</button>
-                  <button type="button" id="add-button" value="{{product.id}}"
-                    class="btn btn-sm btn-outline-secondary btn-product">Add to basket</button>
+                  <button type="button" data-index="{{product.id}}"
+                    class="btn btn-sm btn-outline-secondary btn-product add-button">Add to basket</button>
                 </div>
                 <strong class="text-muted">${{ product.price }}</strong>
               </div>
@@ -55,13 +55,14 @@ text-secondary
   </div>
 </main>
 <script>
-    $(document).on('click', '#add-button', function (e) {
+    $(document).on('click', '.add-button', function (e) {
         e.preventDefault();
+        console.log($(this).data('index'))
         $.ajax({
             type: 'POST',
             url: '{% url "basket:basket_add" %}',
             data: {
-                productid: $('#add-button').val(),
+                productid: $(this).data('index'),
                 quantity: '1',
                 size: '38',
                 csrfmiddlewaretoken: "{{csrf_token}}",

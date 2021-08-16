@@ -9,13 +9,16 @@ from store.models import Product
 class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE, related_name='order_user')
+    product = models.ForeignKey(
+        Product, related_name='order_items', on_delete=models.CASCADE)
+    size = models.CharField(max_length=2)
+    quantity = models.PositiveIntegerField(default=1)
     full_name = models.CharField(max_length=60)
     address1 = models.CharField(max_length=50)
     address2 = models.CharField(max_length=50)
     postcode = models.CharField(max_length=12)
     town = models.CharField(max_length=50)
-    country = CountryField(blank=True)
-    phone_number = models.CharField(max_length=9)
+    country = CountryField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     total_paid = models.DecimalField(max_digits=5, decimal_places=2)
@@ -26,16 +29,4 @@ class Order(models.Model):
         ordering = ('-created',)
 
     def __str__(self):
-        return str(self.created)
-
-
-class OrderItem(models.Model):
-    order = models.ForeignKey(
-        Order, related_name='items', on_delete=models.CASCADE)
-    product = models.ForeignKey(
-        Product, related_name='order_items', on_delete=models.CASCADE)
-    price = models.DecimalField(max_digits=5, decimal_places=2)
-    quantity = models.PositiveIntegerField(default=1)
-
-    def __str__(self):
-        return str(self.id)
+        return str(self.user)

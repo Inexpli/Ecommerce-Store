@@ -15,37 +15,31 @@ text-secondary
 				<div class="col-5 p-2 border">
 					Product details
 				</div>
-				<div class="col-2 p-2 border">
+				<div class="col-5 p-2 border">
 					Order details
-				</div>
-				<div class="col-3 p-2 border">
-					Shipping to
 				</div>
 				<div class="col-1"></div>
 			</div>
 			<div class="row text-center">
 			{% for order in orders %}
-				{% for item in order.items.all %}
 				<div class="col-1"></div>
 				<div class="col-2 border">
-					<img class="img-fluid" src="{{item.product.image.url}}">
+					<a href="{% url 'store:item' order.product.slug %}"><img class="img-fluid" src="{{order.product.image.url}}"></a>
 				</div>
 				<div class="col-3 border p-3">
-					<h5>{{item.product.title}}</h5>
-					<h5>{{item.product.color}}</h5>
+					<h5>{{order.product.title}}</h5>
+					<h5>{{order.product.color}}</h5>
+					<h6 class="pt-4">Product size: {{order.size}}</h6>
+					<h6>Quantity: {{order.quantity}}</h6>
 
 				</div>
-				<div class="col-2 border p-3">
-					<h5>{{order.created}}</h5>
-					<h5>${{order.total_paid}}</h5>
-				</div>
-				<div class="col-3 border p-3">
-					<h5>{{order.country}}</h5>
-					<h5>{{order.town}}, {{order.address1}} {{order.address2}}</h5>
-					<h5>{{order.postcode}}</h5>
+				<div class="col-5 border p-3">
+					<h5 class="pb-3">Shipping to: {{order.country}}<h5>
+					<h6>{{order.town}}, {{order.address1}} {{order.address2}}</h6>
+					<h6>{{order.postcode}}</h6>
+					<h6 class="pt-3">Ordered: {{order.created}}</h6>
 				</div>
 				<div class="col-1"></div>
-				{% endfor %}
 			{% endfor %}
 			</div>
         </div>

@@ -13,6 +13,10 @@ def basket(request):
 
 
 def basket_add(request):
+    '''
+    Handles data captured from ajax and adds product to basket,
+    updates the actual amount of products in basket.
+    '''
     basket = Basket(request)
     if request.POST.get('action') == 'post':
         product_id = int(request.POST.get('productid'))
@@ -26,6 +30,9 @@ def basket_add(request):
 
 
 def basket_delete(request):
+    '''
+    Handles request to delete product from basket
+    '''
     basket = Basket(request)
     if request.POST.get('action') == 'post':
         product_id = int(request.POST.get('productid'))
@@ -35,6 +42,9 @@ def basket_delete(request):
 
 
 def basket_update(request):
+    '''
+    Handles request to update product quantity or size from basket
+    '''
     basket = Basket(request)
     if request.POST.get('action') == 'post':
         product_id = int(request.POST.get('productid'))

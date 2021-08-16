@@ -64,6 +64,9 @@ def account_activate(request, uidb64, token):
 
 
 def user_active_check(user):
+    '''
+    Checks if the user activated account by email
+    '''
     return user.is_active == True
 
 

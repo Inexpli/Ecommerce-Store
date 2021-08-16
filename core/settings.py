@@ -16,7 +16,7 @@ SECRET_KEY = 'django-insecure-23c9_2!@o%!)zhr4%9mnhwv-i-1mr!p4g-^t-&321ygxh$^s%$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'basket',
     'account',
     'payment',
+    'orders',
     'crispy_forms',
 ]
 
@@ -150,3 +151,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
+
+# Stripe config
+STRIPE_ENDPOINT_SECRET = 'whsec_hHuKgngUEuDJO5bIBvq4MZToqj1MehvM'

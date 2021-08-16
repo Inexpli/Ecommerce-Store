@@ -1,0 +1,23 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% block nav-dashboard %}
+text-secondary
+{% endblock %}
+{% block content %}
+<div class="container my-5 p-4 border">
+    <div class="row">
+        <div class="col-12">
+            <h3>Dashboard</h1>
+            <p>Manage your orders and personal details</p>
+			{% for order in orders %}
+			<h4>{{order.created}}</h4>
+			<h6>{{order.full_name}}</h6>
+			<h6>{{order.address1}}</h6>
+			<h6>{{order.address2}}</h6>
+			<h6>{{order.postcode}}</h6>
+			{% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

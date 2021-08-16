@@ -3,6 +3,10 @@ from django.contrib.auth.backends import ModelBackend
 
 
 class CaseInsensitiveModelBackend(ModelBackend):
+    '''
+    Converts uppercase letters on login and registration to operable and vice versa
+    '''
+
     def authenticate(self, request, username, password, **kwargs):
         UserModel = get_user_model()
         if username is None:

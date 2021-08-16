@@ -1,5 +1,4 @@
 from decimal import Decimal
-
 from store.models import Product
 
 
@@ -37,6 +36,10 @@ class Basket():
             self.basket[product_id]['quantity'] = int(product_quantity)
             self.basket[product_id]['size'] = int(product_size)
 
+        self.session.modified = True
+
+    def clear(self):
+        del self.session['skey']
         self.session.modified = True
 
     def __iter__(self):

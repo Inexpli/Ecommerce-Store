@@ -36,32 +36,49 @@ form.addEventListener('submit', function(ev) {
     var custAdd2 = document.getElementById("custAdd2").value;
     var custCode = document.getElementById("postCode").value;
 
-    stripe.confirmCardPayment(clientsecret, {
-        payment_method: {
-            card: card,
-            billing_details: {
-                address: {
-                    postal_code: custCode,
-                    city: custTown,
-                    line1: custAdd,
-                    line2: custAdd2,
+    $.ajax({
+      type: 'POST',
+      url: 'http://127.0.0.1:8000/orders/add/',
+      data: {
+        order_key: clientsecret,
+        custName: custName,
+        custTown: custTown,
+        custAdd: custAdd,
+        custAdd2: custAdd2,
+        custCode: custCode,
+        csrfmiddlewaretoken: CSRF_TOKEN,
+        action: 'post',
+      },
+      success: function (json) {
+        console.log(json.success)
+        stripe.confirmCardPayment(clientsecret, {
+            payment_method: {
+                card: card,
+                billing_details: {
+                    address: {
+                        postal_code: custCode,
+                        city: custTown,
+                        line1: custAdd,
+                        line2: custAdd2,
+                    },
+                    name: custName
                 },
-                name: custName
-            },
-        }
-    }).then(function(result) {
-        if (result.error) {
-          console.log('payment error')
-          console.log(result.error.message);
-        } else {
-          if (result.paymentIntent.status === 'succeeded') {
-            console.log('payment processed')
-            // There's a risk of the customer closing the window before callback
-            // execution. Set up a webhook or plugin to listen for the
-            // payment_intent.succeeded event that handles any business critical
-            // post-payment actions.
-            window.location.replace("http://127.0.0.1:8000/payment/orderplaced/");
-          }
-        }
-    });
+            }
+        }).then(function(result) {
+            if (result.error) {
+              console.log('payment error')
+              console.log(result.error.message);
+            } else {
+              if (result.paymentIntent.status === 'succeeded') {
+                console.log('payment processed')
+                // There's a risk of the customer closing the window before callback
+                // execution. Set up a webhook or plugin to listen for the
+                // payment_intent.succeeded event that handles any business critical
+                // post-payment actions.
+                window.location.replace("http://127.0.0.1:8000/orders/dashboard/");
+              }
+            }
+        });
+      }
+    })
 });

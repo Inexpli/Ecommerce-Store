@@ -29,13 +29,13 @@
   <header>
     <div class="px-3 py-2 bg-dark text-white">
       <div class="container">
-        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-          <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-start">
+          <a href="/" class="d-flex align-items-center my-2 text-white text-decoration-none">
             St<img src="{% static 'img/icon.png' %}" alt="icon" width="32" height="32">re
           </a>
 
-          <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
-            <li>
+          <ul class="nav col-12 my-2 justify-content-center my-md-0 text-small">
+            <li class="nav-obj">
               <a href="/" class="nav-link {% block nav-home %} text-white {% endblock %}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                   class="bi d-block mx-auto mb-1" viewBox="0 0 16 16">
@@ -45,7 +45,7 @@
                 Home
               </a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-obj nav-item dropdown">
               <a class="nav-link {% block nav-products %}text-white{% endblock %} dropdown-toggle" href="#"
                 id="productsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
@@ -64,7 +64,7 @@
                 {% endfor %}
               </ul>
             </li>
-            <li>
+            <li class="nav-obj">
               <a href="/basket/" class="nav-link {% block nav-basket %}text-white{% endblock %}">
                 <span id="basket-count" class="basket_count">
                   {% with total_quantity=basket|length %}
@@ -82,7 +82,7 @@
               </a>
             </li>
             {% if user.is_authenticated %}
-            <li>
+            <li class="nav-obj">
               <a href="{% url 'orders:dashboard' %}" class="nav-link {% block nav-dashboard %}text-white{% endblock %}"
                 role="button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
@@ -97,7 +97,7 @@
                 Dashboard
               </a>
             </li>
-            <li>
+            <li class="nav-obj">
               <a href="{% url 'account:profile' %}" class="nav-link {% block nav-account %}text-white{% endblock %}"
                 role="button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
@@ -109,7 +109,7 @@
                 Account
               </a>
             </li>
-            <li>
+            <li class="nav-obj">
               <a href="{% url 'account:logout' %}" class="nav-link text-white">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                   class="bi d-block mx-auto mb-1" viewBox="0 0 16 16">
@@ -121,7 +121,7 @@
               </a>
             </li>
             {% else %}
-            <li class="nav-item dropdown">
+            <li class="nav-obj nav-item dropdown">
               <a class="nav-link text-white dropdown-toggle" href="#" id="productsDropdown" role="button"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
@@ -242,7 +242,7 @@
         <!--Grid row-->
         <div class="row">
           <!--Grid column-->
-          <div class="col-lg-3 col-md-6 mb-4 mb-md-0 mt-2">
+          <div class="col-lg-3 col-md-6 col-6 mb-4 mb-md-0 mt-2">
             <h5 class="text-uppercase">Products</h5>
 
             <ul class="list-unstyled mb-0">
@@ -256,7 +256,7 @@
           <!--Grid column-->
 
           <!--Grid column-->
-          <div class="col-lg-3 col-md-6 mb-4 mb-md-0 mt-2">
+          <div class="col-lg-3 col-md-6 col-6 mb-4 mb-md-0 mt-2">
             <h5 class="text-uppercase">Account</h5>
 
             <ul class="list-unstyled mb-0">
@@ -274,7 +274,7 @@
           <!--Grid column-->
 
           <!--Grid column-->
-          <div class="col-lg-3 col-md-6 mb-4 mb-md-0 mt-2">
+          <div class="col-lg-3 col-md-6 col-6 mb-4 mb-md-0 mt-2">
             <h5 class="text-uppercase">About</h5>
 
             <ul class="list-unstyled mb-0">
@@ -292,7 +292,7 @@
           <!--Grid column-->
 
           <!--Grid column-->
-          <div class="col-lg-3 col-md-6 mb-4 mb-md-0 mt-2">
+          <div class="col-lg-3 col-md-6 col-6 mb-4 mb-md-0 mt-2">
             <h5 class="text-uppercase">Collections</h5>
 
             <ul class="list-unstyled mb-0">

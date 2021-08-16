@@ -1,3 +1,4 @@
+from django.http import request
 from django.shortcuts import render
 from django.http.response import JsonResponse
 
@@ -21,13 +22,14 @@ def add(request):
         address1 = request.POST.get('custAdd')
         address2 = request.POST.get('custAdd2')
         postcode = request.POST.get('custCode')
+        country = request.POST.get('custCountry')
 
         # Check if order exists
         if Order.objects.filter(order_key=order_key).exists():
             pass
         else:
             order = Order.objects.create(user_id=user_id, full_name=full_name, address1=address1,
-                                         address2=address2, postcode=postcode, town=town, total_paid=baskettotal, order_key=order_key)
+                                         address2=address2, postcode=postcode, town=town, country=country, total_paid=baskettotal, order_key=order_key)
             order_id = order.pk
 
             for item in basket:
@@ -52,3 +54,7 @@ def dashboard(request):
     orders = Order.objects.filter(user=user, billing_status=True)
 
     return render(request, 'orders/dashboard.html', {'orders': orders})
+
+
+def order_done(request):
+    return render(request, 'orders/order_done.html')

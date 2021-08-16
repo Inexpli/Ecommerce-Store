@@ -1,6 +1,7 @@
 from django.db import models
 from decimal import Decimal
 from django.conf import settings
+from django_countries.fields import CountryField
 
 from store.models import Product
 
@@ -13,6 +14,7 @@ class Order(models.Model):
     address2 = models.CharField(max_length=50)
     postcode = models.CharField(max_length=12)
     town = models.CharField(max_length=50)
+    country = CountryField(blank=True)
     phone_number = models.CharField(max_length=9)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

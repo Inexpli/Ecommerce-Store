@@ -10,13 +10,44 @@ text-secondary
         <div class="col-12">
             <h3>Dashboard</h1>
             <p>Manage your orders and personal details</p>
+			<div class="row text-center">
+				<div class="col-1"></div>
+				<div class="col-5 p-2 border">
+					Product details
+				</div>
+				<div class="col-2 p-2 border">
+					Order details
+				</div>
+				<div class="col-3 p-2 border">
+					Shipping to
+				</div>
+				<div class="col-1"></div>
+			</div>
+			<div class="row text-center">
 			{% for order in orders %}
-			<h4>{{order.created}}</h4>
-			<h6>{{order.full_name}}</h6>
-			<h6>{{order.address1}}</h6>
-			<h6>{{order.address2}}</h6>
-			<h6>{{order.postcode}}</h6>
+				{% for item in order.items.all %}
+				<div class="col-1"></div>
+				<div class="col-2 border">
+					<img class="img-fluid" src="{{item.product.image.url}}">
+				</div>
+				<div class="col-3 border p-3">
+					<h5>{{item.product.title}}</h5>
+					<h5>{{item.product.color}}</h5>
+
+				</div>
+				<div class="col-2 border p-3">
+					<h5>{{order.created}}</h5>
+					<h5>${{order.total_paid}}</h5>
+				</div>
+				<div class="col-3 border p-3">
+					<h5>{{order.country}}</h5>
+					<h5>{{order.town}}, {{order.address1}} {{order.address2}}</h5>
+					<h5>{{order.postcode}}</h5>
+				</div>
+				<div class="col-1"></div>
+				{% endfor %}
 			{% endfor %}
+			</div>
         </div>
     </div>
 </div>

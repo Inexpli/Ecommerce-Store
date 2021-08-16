@@ -35,6 +35,7 @@ form.addEventListener('submit', function(ev) {
     var custAdd = document.getElementById("custAdd").value;
     var custAdd2 = document.getElementById("custAdd2").value;
     var custCode = document.getElementById("postCode").value;
+    var custCountry = document.getElementById("custCountry").value;
 
     $.ajax({
       type: 'POST',
@@ -46,6 +47,7 @@ form.addEventListener('submit', function(ev) {
         custAdd: custAdd,
         custAdd2: custAdd2,
         custCode: custCode,
+        custCountry: custCountry,
         csrfmiddlewaretoken: CSRF_TOKEN,
         action: 'post',
       },

@@ -26,29 +26,40 @@ text-secondary
       <div class="row row-cols-2 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-3">
         {% for product in products %}
         <div class="col">
-          <div class="card shadow-sm">
-            <a href="{% url 'store:item' product.slug %}"><img src="{{ product.image.url }}" class="img-fluid" role="img"
-                preserveAspectRatio="xMidYMid slice" focusable="false"></a>
-            <div class="card-body">
-              <h4>{{ product.title }}</h4>
-              <p class="card-text">
-                {% if product.in_stock == False %}
-                  Out of Stock
-                {% else %}
-                  In Stock
-                {% endif %}
-              </p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary btn-product">Add to wishlist</button>
-                  <button type="button" data-index="{{product.id}}"
-                    class="btn btn-sm btn-outline-secondary btn-product add-button">Add to basket</button>
+            <div class="card shadow-sm">
+              <a href="{% url 'store:item' product.slug %}"><img src="{{ product.image.url }}" class="img-fluid" role="img" preserveAspectRatio="xMidYMid slice" focusable="false"></a>
+              <div class="card-body">
+                <div class="card-title">
+                  <h5 class="product-title">{{ product.title }}</h5>
                 </div>
-                <strong class="text-muted">${{ product.price }}</strong>
+                <div class="d-flex ifstock justify-content-between align-items-center pb-3">
+                  <div class="ifstock-container">
+                    <p class="card-text d-inline">
+                      {% if product.in_stock == False %}
+                        Out of Stock
+                      {% else %}
+                        In Stock
+                      {% endif %}
+                    </p>
+                  </div>
+                  <div class="price-container">
+                    <p class="d-inline">${{ product.price }}</p>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    {% if product.in_stock == False %}
+                    <button type="button" class="btn btn-sm btn-outline-secondary btn-product wishlst">Add to wishlist</button>
+                    {% else %}
+                    <button type="button" class="btn btn-sm btn-outline-secondary btn-product">Add to wishlist</button>
+                    <button type="button" data-index="{{product.id}}"
+                    class="btn btn-sm btn-outline-secondary btn-product add-button">Add to basket</button>
+                    {% endif %}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
         {% endfor %}
       </div>
     </div>

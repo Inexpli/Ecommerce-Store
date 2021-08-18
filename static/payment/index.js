@@ -77,7 +77,7 @@ form.addEventListener('submit', function(ev) {
                 // execution. Set up a webhook or plugin to listen for the
                 // payment_intent.succeeded event that handles any business critical
                 // post-payment actions.
-                window.location.replace("http://127.0.0.1:8000/orders/dashboard/");
+                window.location.replace("http://127.0.0.1:8000/orders/order-done/");
               }
             }
         });

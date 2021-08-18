@@ -27,7 +27,6 @@ svg {
 }
 
 .item-image {
-    border-radius: 5%;
     box-shadow: 3px 3px grey;
 }
 
@@ -37,13 +36,44 @@ svg {
 
 @media screen and (max-width: 768px) {
     .product-title {
-        font-size: 1rem !important;
+        font-size: 1.0rem !important;
     }
 
     .btn-product {
         padding: .15rem .25rem !important;
     }
 }
+
+@media screen and (max-width: 530px) {
+    .card-title {
+        height: 35px;
+    }
+}
+
+@media screen and (max-width: 485px) {
+    .wishlst {
+        width: 100px;
+    }
+}
+
+@media screen and (max-width: 395px) {
+    .d-flex {
+        display: block !important;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .card-title {
+        height: 55px;
+    }
+}
+
+@media screen and (max-width: 395px) {
+    .foot {
+        display: inline-flex !important;
+    }
+}
+
 
 .asteriskField {
     color: red;
@@ -85,7 +115,9 @@ svg {
     color: #fff;
     opacity: .9;
     font-weight: 700;
-    padding: 5.2px 19.5px;
+    padding-top: 5.5px;
+    padding-left: 37px;
+    display: block;
 }
 
 #no-items {

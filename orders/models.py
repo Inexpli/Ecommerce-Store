@@ -18,7 +18,7 @@ class Order(models.Model):
     address2 = models.CharField(max_length=50)
     postcode = models.CharField(max_length=12)
     town = models.CharField(max_length=50)
-    country = CountryField()
+    country = models.CharField(max_length=35)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     total_paid = models.DecimalField(max_digits=5, decimal_places=2)

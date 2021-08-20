@@ -47,9 +47,9 @@
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
                     {% if product.in_stock == False %}
-                    <button type="button" class="btn btn-sm btn-outline-secondary btn-product wishlst">Add to wishlist</button>
+                    <button type="button" data-index="{{product.id}}" class="btn btn-sm btn-outline-secondary btn-product wishlst wishlist-add">Add to wishlist</button>
                     {% else %}
-                    <button type="button" class="btn btn-sm btn-outline-secondary btn-product">Add to wishlist</button>
+                    <button type="button" data-index="{{product.id}}" class="btn btn-sm btn-outline-secondary btn-product wishlist-add">Add to wishlist</button>
                     <button type="button" data-index="{{product.id}}"
                     class="btn btn-sm btn-outline-secondary btn-product add-button">Add to basket</button>
                     {% endif %}
@@ -66,7 +66,6 @@
 <script>
     $(document).on('click', '.add-button', function (e) {
         e.preventDefault();
-        console.log($(this).data('index'))
         $.ajax({
             type: 'POST',
             url: '{% url "basket:basket_add" %}',
@@ -80,6 +79,21 @@
             success: function (json) {
                 document.getElementById("basket-count").innerHTML = json.quantity
             },
+            error: function (xhr, errmsg, err) {}
+        });
+    })
+
+    $(document).on('click', '.wishlist-add', function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '{% url "wishlist:wishlist_add" %}',
+            data: {
+                itemid: $(this).data('index'),
+                csrfmiddlewaretoken: "{{csrf_token}}",
+                action: 'post',
+            },
+            success: function (json) {},
             error: function (xhr, errmsg, err) {}
         });
     })

@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'account',
     'payment',
     'orders',
+    'wishlist',
     'crispy_forms',
 ]
 

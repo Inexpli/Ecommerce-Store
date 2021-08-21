@@ -5,88 +5,167 @@
 text-secondary
 {% endblock %}
 {% block content %}
-<div class="col-12 px-5 pt-5">
+<div class="col-12 px-5 py-5">
 	<a class="btn btn-outline-dark ml-5" onclick="Previous()">&#x2190; Continue Shopping</a>
 </div>
 <div class="album py-5 bg-light">
 	<div class="container">
-	<div class="row row-cols-2 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-3">
-	{% for wishitem in wishlist %}
-		<div class="col">
-		<div class="card shadow-sm">
-			<a href="{% url 'store:item' wishitem.item.slug %}"><img src="{{ wishitem.item.image.url }}" class="img-fluid" role="img" preserveAspectRatio="xMidYMid slice" focusable="false"></a>
-			<div class="card-body">
-			<div class="card-title">
-				<h5 class="product-title">{{ wishitem.item.title }}</h5>
-			</div>
-			<div class="d-flex ifstock justify-content-between align-items-center pb-3">
-				<div class="ifstock-container">
-				<p class="card-text d-inline">
-					{% if wishitem.item.in_stock == False %}
-					Out of Stock
-					{% else %}
-					In Stock
-					{% endif %}
-				</p>
-				</div>
-				<div class="price-container">
-				<p class="d-inline">${{ wishitem.item.price }}</p>
-				</div>
-			</div>
-			<div class="d-flex justify-content-between align-items-center">
-				<div class="btn-group">
-				{% if wishitem.item.in_stock == False %}
-				<button type="button" data-index="{{wishitem.item.id}}"
-				class="btn btn-sm btn-outline-secondary btn-product wishlst-remove">Remove from wishlist</button>
-				{% else %}
-				<button type="button" data-index="{{wishitem.item.id}}"
-				class="btn btn-sm btn-outline-secondary btn-product wishlst-remove">Remove from wishlist</button>
-				<button type="button" data-index="{{wishitem.item.id}}"
-				class="btn btn-sm btn-outline-secondary btn-product add-button">Add to basket</button>
-				{% endif %}
-				</div>
-			</div>
-			</div>
+		{% if user.is_authenticated %}
+		{% if error != None %}
+		<h5 class="text-center">{{error}}</h5>
+		{% else %}
+		{% endif %}
+		<div class="row row-cols-2 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-3">
+			{% for wishitem in wishlist %}
+			<div class="col">
+            <div class="card shadow-sm">
+              <a href="{% url 'store:item' wishitem.item.slug %}"><img src="{{ wishitem.item.image.url }}" class="img-fluid" role="img" preserveAspectRatio="xMidYMid slice" focusable="false"></a>
+              <div class="card-body">
+                <div class="card-title">
+                  <h5 class="product-title">{{ wishitem.item.title }}</h5>
+                </div>
+                <div class="d-flex ifstock justify-content-between align-items-center pb-3">
+                  <div class="ifstock-container">
+                    <p class="card-text d-inline">
+                      {% if wishitem.item.in_stock == False %}
+                        Out of Stock
+                      {% else %}
+                        In Stock
+                      {% endif %}
+                    </p>
+                  </div>
+                  <div class="price-container">
+                    <p class="d-inline">${{ wishitem.item.price }}</p>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    {% if wishitem.item.in_stock == False %}
+                    <button type="button" data-index="{{wishitem.item.id}}" class="btn btn-sm btn-outline-secondary btn-product wishlst wishlst-remove">Remove from wishlist</button>
+                    {% else %}
+                    <button type="button" data-index="{{wishitem.item.id}}" class="btn btn-sm btn-outline-secondary btn-product wishlst-remove">Remove from wishlist</button>
+                    <button type="button" data-index="{{wishitem.item.id}}"
+                    class="btn btn-sm btn-outline-secondary btn-product add-button">Add to basket</button>
+                    {% endif %}
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+		  {% endfor %}
 		</div>
+		{% else %}
+		{% with total_quantity=wishlist|length %}
+		{% if total_quantity > 0 %}
+		<div class="row row-cols-2 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-3">
+			{% for item in wishlist %}
+			<div class="col">
+				<div class="card shadow-sm">
+					<a href="{% url 'store:item' item.product.slug %}"><img src="{{ item.product.image.url }}"
+							class="img-fluid" role="img" preserveAspectRatio="xMidYMid slice" focusable="false"></a>
+					<div class="card-body">
+						<div class="card-title">
+							<h5 class="product-title">{{ item.product.title }}</h5>
+						</div>
+						<div class="d-flex ifstock justify-content-between align-items-center pb-3">
+							<div class="ifstock-container">
+								<p class="card-text d-inline">
+									{% if item.product.in_stock == False %}
+									Out of Stock
+									{% else %}
+									In Stock
+									{% endif %}
+								</p>
+							</div>
+							<div class="price-container">
+								<p class="d-inline">${{ item.product.price }}</p>
+							</div>
+						</div>
+						<div class="d-flex justify-content-between align-items-center">
+							<div class="btn-group">
+								{% if item.product.in_stock == False %}
+								<button type="button" data-index="{{item.product.id}}"
+									class="btn btn-sm btn-outline-secondary btn-product notauth-wishlst-remove">Remove
+									from wishlist</button>
+								{% else %}
+								<button type="button" data-index="{{item.product.id}}"
+									class="btn btn-sm btn-outline-secondary btn-product notauth-wishlst-remove">Remove
+									from wishlist</button>
+								<button type="button" data-index="{{item.product.id}}"
+									class="btn btn-sm btn-outline-secondary btn-product add-button">Add to
+									basket</button>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
 		</div>
-	{% endfor %}
+		{% else %}
+		<h5 class="text-center">Your wishlist is empty</h5>
+		{% endif %}
+		{% endwith %}
 	</div>
-	</div>
+	{% endif %}
+</div>
 </div>
 <script>
+	function Previous() {
+		window.history.back()
+	}
+
 	$(document).on('click', '.add-button', function (e) {
-        e.preventDefault();
-        $.ajax({
-            type: 'POST',
-            url: '{% url "basket:basket_add" %}',
-            data: {
-                productid: $(this).data('index'),
-                quantity: '1',
-                size: '38',
-                csrfmiddlewaretoken: "{{csrf_token}}",
-                action: 'post',
-            },
-            success: function (json) {
-                document.getElementById("basket-count").innerHTML = json.quantity
-            },
-            error: function (xhr, errmsg, err) {}
-        });
-    })
+		e.preventDefault();
+		$.ajax({
+			type: 'POST',
+			url: '{% url "basket:basket_add" %}',
+			data: {
+				productid: $(this).data('index'),
+				quantity: '1',
+				size: '38',
+				csrfmiddlewaretoken: "{{csrf_token}}",
+				action: 'post',
+			},
+			success: function (json) {
+				document.getElementById("basket-count").innerHTML = json.quantity
+			},
+			error: function (xhr, errmsg, err) {}
+		});
+	})
+
 	$(document).on('click', '.wishlst-remove', function (e) {
-        e.preventDefault();
-        $.ajax({
-            type: 'POST',
-            url: '{% url "wishlist:wishlist_remove" %}',
-            data: {
-                itemid: $(this).data('index'),
-                csrfmiddlewaretoken: "{{csrf_token}}",
-                action: 'post',
-            },
-            success: function (json) {
+		e.preventDefault();
+		$.ajax({
+			type: 'POST',
+			url: '{% url "wishlist:wishlist_remove" %}',
+			data: {
+				itemid: $(this).data('index'),
+				csrfmiddlewaretoken: "{{csrf_token}}",
+				action: 'post',
+			},
+			success: function (json) {
 				window.location.reload()
 			},
-            error: function (xhr, errmsg, err) {}
-        });
-    })
+			error: function (xhr, errmsg, err) {}
+		});
+	})
+
+	$(document).on('click', '.notauth-wishlst-remove', function (e) {
+		e.preventDefault();
+		$.ajax({
+			type: 'POST',
+			url: '{% url "wishlist:not_auth_wishlist_remove" %}',
+			data: {
+				itemid: $(this).data('index'),
+				csrfmiddlewaretoken: "{{csrf_token}}",
+				action: 'post',
+			},
+			success: function (json) {
+				window.location.reload()
+			},
+			error: function (xhr, errmsg, err) {}
+		});
+	})
 </script>
 {% endblock %}

@@ -8,9 +8,104 @@ text-secondary
 <div class="col-12 px-5 pt-5">
 	<a class="btn btn-outline-dark ml-5" onclick="Previous()">&#x2190; Continue Shopping</a>
 </div>
-{% with total_quantity=basket|length %}
 <div class="container my-5 p-3 border">
 	<div class="row p-3">
+	{% if user.is_authenticated %}
+		<div class="col-12">
+			{% for basketitem in basketmodel %}
+			<section class="items">
+				<div class="item border row">
+					<div class="col-2">
+						<img class="img-fluid" id="productImg{{basketitem.item.id}}" src="{{ basketitem.item.image.url }}">
+					</div>
+					<div class="col-5 p-3">
+						<h5 id="productTitle{{item.product.id}}">{{basketitem.item.title}}</h5>
+						<br>
+						<h6 id="size{{item.product.id}}" data-index="{{item.size}}">Size: {{basketitem.size}}</h6>
+						<h6 id="qty{{item.product.id}}" data-index="{{item.quantity}}">Quantity: {{basketitem.quantity}}</h6>
+						<h6>Color: {{basketitem.item.color}}</h6>
+					</div>
+					<div class="col-5 p-3" style="text-align: end; position:relative;">
+						<h5 id="productPrc{{item.product.id}}" data-index="{{item.price}}" class="text-muted price-info">{{basketitem.quantity}} x ${{basketitem.item.price}}</h5>
+						<hr style="margin-left: auto; max-width: 100px;">
+						<h5 id="totalPrc{{item.product.id}}" data-index="{{item.total_price}}" class="text-muted">${{basketitem.price}}</h5>
+						<button type="button" class="edit-button m-3" data-bs-toggle="modal" data-index="{{item.product.id}}" data-bs-target="#exampleModal" title="Edit">
+							<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
+								class="basket-svg" viewBox="0 0 16 16" class="note-edit">
+								<path
+									d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+								<path fill-rule="evenodd"
+									d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+							</svg>
+						</button>
+						<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered">
+								<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="title"></h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<div class="row">
+										<div class="col-6">
+											<img class="img-fluid" id="img" src="">
+										</div>
+										<div class="col-6" style="text-align: end; position:relative;">
+											<table class="table table-sm table-borderless text-center">
+												<tbody>
+													<tr>
+														<td class="pb-0">Select size</td>
+														<td class="pb-0">Quantity</td>
+													</tr>
+													<tr>
+														<td>
+															<select name="size" id="edit-size">
+																<option id="size38" value="38">38</option>
+																<option id="size39" value="39">39</option>
+																<option id="size40" value="40">40</option>
+																<option id="size41" value="41">41</option>
+																<option id="size42" value="42">42</option>
+																<option id="size43" value="43">43</option>
+																<option id="size44" value="44">44</option>
+															</select>
+														</td>
+														<td>
+															<select name="quantity" id="edit-quantity" style="margin-left: 0;" onchange="AutoPrice()">
+																<option id="opt1" value="1">1</option>
+																<option id="opt2" value="2">2</option>
+																<option id="opt3" value="3">3</option>
+															</select>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+											<h5 class="text-muted" id="modal-price"></h5>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+									<button type="button" value="" id="update" class="btn btn-primary">Save changes</button>
+								</div>
+								</div>
+							</div>
+						</div>
+						<button type="button" class="auth-remove-button m-3" data-index="{{basketitem.item.id}}" title="Remove">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+								class="basket-svg" viewBox="0 0 16 16">
+								<path
+									d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+								<path
+									d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+							</svg>
+						</button>
+					</div>
+				</div>
+			</section>
+			{% endfor %}
+		</div>
+	{% else %}
+		{% with total_quantity=basket|length %}
 		{% if total_quantity > 0 %}
 		<div class="row mb-4">
 			<div class="col-6">
@@ -129,6 +224,7 @@ text-secondary
 			{% endfor %}
 		</div>
 		{% endwith %}
+	{% endif %}
 	</div>
 </div>
 <script>
@@ -190,6 +286,23 @@ text-secondary
 			},
 			success: function (json) {
 				window.location.reload(true);
+			},
+			error: function (xhr, errmsg, err) {}
+		});
+	})
+
+	$(document).on('click', '.auth-remove-button', function (e) {
+		e.preventDefault();
+		$.ajax({
+			type: 'POST',
+			url: '{% url "basket:auth_basket_remove" %}',
+			data: {
+				itemid: $(this).data('index'),
+				csrfmiddlewaretoken: "{{csrf_token}}",
+				action: 'post',
+			},
+			success: function (json) {
+				window.location.reload()
 			},
 			error: function (xhr, errmsg, err) {}
 		});

@@ -1,15 +1,26 @@
 from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404, render
+from django.contrib.auth.decorators import login_required
+from account.models import UserBase
 
-from basket.basket import Basket
 from store.models import Product
 
 from .basket import Basket
+from .models import Basket as BasketModel
 
 
 def basket(request):
-    basket = Basket(request)
-    return render(request, 'basket/basket.html', {'basket': basket})
+    if request.user.is_authenticated:
+        user = request.user.id
+        context = BasketModel.objects.filter(user=user)
+        if context:
+            error = None
+        else:
+            error = 'Your basket is empty'
+    else:
+        context = Basket(request)
+        error = None
+    return render(request, 'basket/basket.html', {'basketmodel': context, 'error': error})
 
 
 def basket_add(request):
@@ -53,4 +64,34 @@ def basket_update(request):
         basket.update(product=product_id, quantity=quantity, size=size)
 
         response = JsonResponse({'Success': True})
+        return response
+
+
+@login_required
+def auth_basket_add(request):
+    user = get_object_or_404(UserBase, id=request.user.id)
+    if request.POST.get('action') == 'post':
+        itemID = int(request.POST.get('itemid'))
+        quantity = int(request.POST.get('quantity'))
+        size = int(request.POST.get('size'))
+        product = get_object_or_404(Product, id=itemID)
+        if BasketModel.objects.filter(user=user, item=product).exists():
+            pass
+        else:
+            BasketModel.objects.create(
+                user=user, item=product, quantity=quantity, size=size)
+
+        response = JsonResponse({'success': 'Added'})
+        return response
+
+
+@login_required
+def auth_basket_remove(request):
+    user = get_object_or_404(UserBase, id=request.user.id)
+    if request.POST.get('action') == 'post':
+        itemID = int(request.POST.get('itemid'))
+        product = get_object_or_404(Product, id=itemID)
+        BasketModel.objects.filter(user=user, item=product).delete()
+
+        response = JsonResponse({'success': 'Removed'})
         return response

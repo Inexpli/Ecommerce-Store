@@ -5,9 +5,9 @@ from store.models import Product
 class Basket():
     def __init__(self, request):
         self.session = request.session
-        basket = self.session.get('skey')
-        if 'skey' not in request.session:
-            basket = self.session['skey'] = {}
+        basket = self.session.get('bt')
+        if 'bt' not in request.session:
+            basket = self.session['bt'] = {}
         self.basket = basket
 
     def add(self, product, quantity, size):
@@ -39,7 +39,7 @@ class Basket():
         self.session.modified = True
 
     def clear(self):
-        del self.session['skey']
+        del self.session['bt']
         self.session.modified = True
 
     def __iter__(self):

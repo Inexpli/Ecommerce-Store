@@ -8,9 +8,9 @@ from store.models import Product
 
 class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.CASCADE, related_name='order_user')
+                             on_delete=models.SET_NULL, null=True, related_name='order_user')
     product = models.ForeignKey(
-        Product, related_name='order_items', on_delete=models.CASCADE)
+        Product, related_name='order_items', on_delete=models.SET_NULL, null=True)
     size = models.CharField(max_length=2)
     quantity = models.PositiveIntegerField(default=1)
     full_name = models.CharField(max_length=60)

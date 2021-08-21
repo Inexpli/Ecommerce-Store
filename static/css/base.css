@@ -83,7 +83,8 @@ svg {
     margin: 1.25rem 0 1.25rem 0;
 }
 
-.remove-button {
+.remove-button,
+.auth-remove-button {
     bottom: 0;
     border: none;
     background: none;

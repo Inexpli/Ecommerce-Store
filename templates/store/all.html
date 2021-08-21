@@ -46,14 +46,24 @@
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
+                  {% if user.is_authenticated %}
                     {% if product.in_stock == False %}
                     <button type="button" data-index="{{product.id}}" class="btn btn-sm btn-outline-secondary btn-product wishlst wishlist-add">Add to wishlist</button>
                     {% else %}
                     <button type="button" data-index="{{product.id}}" class="btn btn-sm btn-outline-secondary btn-product wishlist-add">Add to wishlist</button>
                     <button type="button" data-index="{{product.id}}"
+                    class="btn btn-sm btn-outline-secondary btn-product auth-add-button">Add to basket</button>
+                    {% endif %}
+                  {% else %}
+                    {% if product.in_stock == False %}
+                    <button type="button" data-index="{{product.id}}" class="btn btn-sm btn-outline-secondary btn-product wishlst notauth-wishlist-add">Add to wishlist</button>
+                    {% else %}
+                    <button type="button" data-index="{{product.id}}" class="btn btn-sm btn-outline-secondary btn-product notauth-wishlist-add">Add to wishlist</button>
+                    <button type="button" data-index="{{product.id}}"
                     class="btn btn-sm btn-outline-secondary btn-product add-button">Add to basket</button>
                     {% endif %}
-                  </div>
+                  {% endif %}
+                </div>
                 </div>
               </div>
             </div>
@@ -83,6 +93,21 @@
         });
     })
 
+    $(document).on('click', '.notauth-wishlist-add', function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '{% url "wishlist:not_auth_wishlist_add" %}',
+            data: {
+                itemid: $(this).data('index'),
+                csrfmiddlewaretoken: "{{csrf_token}}",
+                action: 'post',
+            },
+            success: function (json) {},
+            error: function (xhr, errmsg, err) {}
+        });
+    })
+
     $(document).on('click', '.wishlist-add', function (e) {
         e.preventDefault();
         $.ajax({
@@ -90,6 +115,23 @@
             url: '{% url "wishlist:wishlist_add" %}',
             data: {
                 itemid: $(this).data('index'),
+                csrfmiddlewaretoken: "{{csrf_token}}",
+                action: 'post',
+            },
+            success: function (json) {},
+            error: function (xhr, errmsg, err) {}
+        });
+    })
+
+    $(document).on('click', '.auth-add-button', function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '{% url "basket:auth_basket_add" %}',
+            data: {
+                itemid: $(this).data('index'),
+                quantity: '1',
+                size: '38',
                 csrfmiddlewaretoken: "{{csrf_token}}",
                 action: 'post',
             },

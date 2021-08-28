@@ -40,7 +40,7 @@ def add(request):
             for basketitem in BasketModel.objects.filter(user=user_id):
                 product = get_object_or_404(Product, id=basketitem.item.id)
                 order = Order.objects.create(user_id=user_id, product=product, size=basketitem.size, quantity=basketitem.quantity, full_name=full_name, address1=address1,
-                                             address2=address2, postcode=postcode, town=town, country=country, total_paid=baskettotal, order_key=order_key, authenticated=True)
+                                             address2=address2, postcode=postcode, town=town, country=country, total_paid=baskettotal, order_key=order_key)
 
         response = JsonResponse({'success': 'Return authenticated orders'})
         return response

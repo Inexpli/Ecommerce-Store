@@ -1,22 +1,31 @@
+from datetime import datetime
+
+from django.contrib.auth.decorators import login_required
 from django.http import request
-from django.shortcuts import render
 from django.http.response import JsonResponse
+from django.shortcuts import get_object_or_404, render
 
 from basket.basket import Basket
+from basket.models import Basket as BasketModel
+from store.models import Product
+
 from .models import Order
 
+now = datetime.now()
 
+
+@login_required
 def add(request):
     '''
     Creates order if payment has been completed
     '''
-    basket = Basket(request)
     if request.POST.get('action') == 'post':
-
         order_key = request.POST.get('order_key')
         user_id = request.user.id
-        baskettotal = basket.get_total_price()
-
+        total_price = 0
+        for basketitem in BasketModel.objects.filter(user=user_id):
+            total_price += basketitem.item.price * basketitem.quantity
+        baskettotal = total_price
         full_name = request.POST.get('custName')
         town = request.POST.get('custTown')
         address1 = request.POST.get('custAdd')
@@ -28,11 +37,12 @@ def add(request):
         if Order.objects.filter(order_key=order_key).exists():
             pass
         else:
-            for item in basket:
-                order = Order.objects.create(user_id=user_id, product=item['product'], size=item['size'], quantity=item['quantity'], full_name=full_name, address1=address1,
-                                             address2=address2, postcode=postcode, town=town, country=country, total_paid=baskettotal, order_key=order_key)
+            for basketitem in BasketModel.objects.filter(user=user_id):
+                product = get_object_or_404(Product, id=basketitem.item.id)
+                order = Order.objects.create(user_id=user_id, product=product, size=basketitem.size, quantity=basketitem.quantity, full_name=full_name, address1=address1,
+                                             address2=address2, postcode=postcode, town=town, country=country, total_paid=baskettotal, order_key=order_key, authenticated=True)
 
-        response = JsonResponse({'success': 'Return something'})
+        response = JsonResponse({'success': 'Return authenticated orders'})
         return response
 
 
@@ -43,14 +53,14 @@ def payment_confirmation(data):
     Order.objects.filter(order_key=data).update(billing_status=True)
 
 
+@login_required
 def dashboard(request):
-    basket = Basket(request)
-    basket.clear()
     user = request.user.id
-    orders = Order.objects.filter(user=user, billing_status=True)
+    order = Order.objects.filter(user=user, billing_status=True)
+    return render(request, 'orders/dashboard.html', {'orders': order})
 
-    return render(request, 'orders/dashboard.html', {'orders': orders})
 
-
+@login_required
 def order_done(request):
+    BasketModel.objects.filter(user=request.user.id).delete()
     return render(request, 'orders/order_done.html')

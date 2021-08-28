@@ -1,7 +1,6 @@
-from django.db import models
-from decimal import Decimal
 from django.conf import settings
-from django_countries.fields import CountryField
+from django.db import models
+from django.db.models.fields import BooleanField
 
 from store.models import Product
 
@@ -24,6 +23,7 @@ class Order(models.Model):
     total_paid = models.DecimalField(max_digits=5, decimal_places=2)
     order_key = models.CharField(max_length=200)
     billing_status = models.BooleanField(default=False)
+    authenticated = BooleanField(default=False)
 
     class Meta:
         ordering = ('-created',)

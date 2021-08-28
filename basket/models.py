@@ -1,6 +1,7 @@
-from django.db import models
-from store.models import Product
 from django.conf import settings
+from django.db import models
+
+from store.models import Product
 
 
 class Basket(models.Model):
@@ -14,8 +15,8 @@ class Basket(models.Model):
     class Meta:
         ordering = ('-added',)
 
+    def price(self):
+        return float(self.item.price * self.quantity)
+
     def __str__(self):
         return str(self.user)
-
-    def price(self):
-        return(float(self.item.price * self.quantity))

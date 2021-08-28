@@ -11,4 +11,5 @@ urlpatterns = [
     path('update/', views.basket_update, name='basket_update'),
     path('auth-add/', views.auth_basket_add, name='auth_basket_add'),
     path('auth-delete/', views.auth_basket_remove, name='auth_basket_remove'),
+    path('auth-update/', views.auth_basket_update, name='auth_basket_update'),
 ]

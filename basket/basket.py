@@ -1,4 +1,3 @@
-from decimal import Decimal
 from store.models import Product
 
 
@@ -14,7 +13,7 @@ class Basket():
         product_id = str(product.id)
 
         if product_id not in self.basket:
-            self.basket[product_id] = {'price': int(
+            self.basket[product_id] = {'productid': int(product.id), 'price': int(
                 product.price), 'quantity': int(quantity), 'size': int(size)}
 
         self.session.modified = True

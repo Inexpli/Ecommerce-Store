@@ -1,8 +1,9 @@
+from django.contrib.auth.decorators import login_required
+from django.db.models import Sum
 from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404, render
-from django.contrib.auth.decorators import login_required
-from account.models import UserBase
 
+from account.models import UserBase
 from store.models import Product
 
 from .basket import Basket
@@ -12,15 +13,22 @@ from .models import Basket as BasketModel
 def basket(request):
     if request.user.is_authenticated:
         user = request.user.id
+        total_quantity = BasketModel.objects.filter(user=user).aggregate(
+            basket_quantity=Sum('quantity'))['basket_quantity']
+        total_price = 0
+        for basketitem in BasketModel.objects.filter(user=user):
+            total_price += basketitem.item.price * basketitem.quantity
         context = BasketModel.objects.filter(user=user)
         if context:
             error = None
         else:
             error = 'Your basket is empty'
     else:
-        context = Basket(request)
+        context = None
         error = None
-    return render(request, 'basket/basket.html', {'basketmodel': context, 'error': error})
+        total_price = None
+        total_quantity = None
+    return render(request, 'basket/basket.html', {'basketmodel': context, 'error': error, 'total_price': total_price, 'total_quantity': total_quantity})
 
 
 def basket_add(request):
@@ -92,6 +100,21 @@ def auth_basket_remove(request):
         itemID = int(request.POST.get('itemid'))
         product = get_object_or_404(Product, id=itemID)
         BasketModel.objects.filter(user=user, item=product).delete()
+
+        response = JsonResponse({'success': 'Removed'})
+        return response
+
+
+@login_required
+def auth_basket_update(request):
+    user = get_object_or_404(UserBase, id=request.user.id)
+    if request.POST.get('action') == 'post':
+        itemID = int(request.POST.get('productid'))
+        product = get_object_or_404(Product, id=itemID)
+        quantity = int(request.POST.get('quantity'))
+        size = int(request.POST.get('size'))
+        BasketModel.objects.filter(user=user, item=product).update(
+            quantity=quantity, size=size)
 
         response = JsonResponse({'success': 'Removed'})
         return response

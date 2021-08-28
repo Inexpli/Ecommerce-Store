@@ -48,7 +48,7 @@ text-secondary
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    {% if user.is_authenticated %}
+                  {% if user.is_authenticated %}
                     {% if product.in_stock == False %}
                     <button type="button" data-index="{{product.id}}" class="btn btn-sm btn-outline-secondary btn-product wishlst wishlist-add">Add to wishlist</button>
                     {% else %}
@@ -92,6 +92,23 @@ text-secondary
             success: function (json) {
                 document.getElementById("basket-count").innerHTML = json.quantity
             },
+            error: function (xhr, errmsg, err) {}
+        });
+    })
+
+    $(document).on('click', '.auth-add-button', function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '{% url "basket:auth_basket_add" %}',
+            data: {
+                itemid: $(this).data('index'),
+                quantity: '1',
+                size: '38',
+                csrfmiddlewaretoken: "{{csrf_token}}",
+                action: 'post',
+            },
+            success: function (json) {},
             error: function (xhr, errmsg, err) {}
         });
     })

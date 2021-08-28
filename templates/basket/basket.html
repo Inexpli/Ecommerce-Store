@@ -11,6 +11,30 @@ text-secondary
 <div class="container my-5 p-3 border">
 	<div class="row p-3">
 	{% if user.is_authenticated %}
+		{% if total_quantity > 0 %}
+		<div class="row mb-4">
+			<div class="col-6">
+				<div class="basket-info">
+					<h2>Your basket</h2>
+					<h4>Total: <span class="text-muted">(
+							{% if total_quantity > 0 %}
+							{{total_quantity}}
+							{% endif %}
+							{% if total_quantity > 1 %} Products {% else %} Product {% endif %})
+							{{total_price}}$</span></h4>
+				</div>
+			</div>
+			<div class="col-2"></div>
+			<div class="col-2 text-center" style="position: relative;">
+				<button class="btn btn-outline-danger" type="button" style="width: 100px; height: 70px; position: absolute; top: 50%; right:20%; -ms-transform: translateY(-50%); transform: translateY(-50%);">Clear basket</button>
+			</div>
+			<div class="col-2 text-center" style="position: relative;">
+				<button class="btn btn-outline-success" type="button" onclick="location.href='/payment/'" style="width: 100px; height: 70px; position: absolute; top: 50%; right:20%; -ms-transform: translateY(-50%); transform: translateY(-50%);">Checkout</button>
+			</div>
+		{% else %}
+			<h3 class="text-center">Your basket is empty, <a href="{% url 'store:all' %}">do something with it</a></h3>
+		{% endif %}
+		</div>
 		<div class="col-12">
 			{% for basketitem in basketmodel %}
 			<section class="items">
@@ -19,17 +43,17 @@ text-secondary
 						<img class="img-fluid" id="productImg{{basketitem.item.id}}" src="{{ basketitem.item.image.url }}">
 					</div>
 					<div class="col-5 p-3">
-						<h5 id="productTitle{{item.product.id}}">{{basketitem.item.title}}</h5>
+						<h5 id="productTitle{{basketitem.item.id}}">{{basketitem.item.title}}</h5>
 						<br>
-						<h6 id="size{{item.product.id}}" data-index="{{item.size}}">Size: {{basketitem.size}}</h6>
-						<h6 id="qty{{item.product.id}}" data-index="{{item.quantity}}">Quantity: {{basketitem.quantity}}</h6>
+						<h6 id="size{{basketitem.item.id}}" data-index="{{basketitem.size}}">Size: {{basketitem.size}}</h6>
+						<h6 id="qty{{basketitem.item.id}}" data-index="{{basketitem.quantity}}">Quantity: {{basketitem.quantity}}</h6>
 						<h6>Color: {{basketitem.item.color}}</h6>
 					</div>
 					<div class="col-5 p-3" style="text-align: end; position:relative;">
-						<h5 id="productPrc{{item.product.id}}" data-index="{{item.price}}" class="text-muted price-info">{{basketitem.quantity}} x ${{basketitem.item.price}}</h5>
+						<h5 id="productPrc{{basketitem.item.id}}" data-index="{{basketitem.item.price}}" class="text-muted price-info">{{basketitem.quantity}} x ${{basketitem.item.price}}</h5>
 						<hr style="margin-left: auto; max-width: 100px;">
-						<h5 id="totalPrc{{item.product.id}}" data-index="{{item.total_price}}" class="text-muted">${{basketitem.price}}</h5>
-						<button type="button" class="edit-button m-3" data-bs-toggle="modal" data-index="{{item.product.id}}" data-bs-target="#exampleModal" title="Edit">
+						<h5 id="totalPrc{{basketitem.item.id}}" data-index="{{basketitem.price}}" class="text-muted">${{basketitem.price}}</h5>
+						<button type="button" class="auth-edit-button m-3" data-bs-toggle="modal" data-index="{{basketitem.item.id}}" data-bs-target="#exampleModal" title="Edit">
 							<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
 								class="basket-svg" viewBox="0 0 16 16" class="note-edit">
 								<path
@@ -85,7 +109,7 @@ text-secondary
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-									<button type="button" value="" id="update" class="btn btn-primary">Save changes</button>
+									<button type="button" value="" id="auth-update" class="btn btn-primary">Save changes</button>
 								</div>
 								</div>
 							</div>
@@ -255,6 +279,22 @@ text-secondary
 		document.getElementById(`size${selected_size}`).selected = true;
 	})
 
+	$(document).on('click', '.auth-edit-button', function (e) {
+		e.preventDefault();
+		product = $(this).data('index');
+		document.getElementById('auth-update').value = product;
+		title = document.getElementById(`productTitle${product}`).innerText;
+		document.getElementById('title').innerText = title;
+		img = document.getElementById(`productImg${product}`).src;
+		document.getElementById('img').src = img;
+		price = $(`#totalPrc${product}`).data('index');
+		document.getElementById('modal-price').innerText = "$" + price;
+		selected_quantity = $(`#qty${product}`).data('index');
+		document.getElementById(`opt${selected_quantity}`).selected = true;
+		selected_size = $(`#size${product}`).data('index');
+		document.getElementById(`size${selected_size}`).selected = true;
+	})
+
 	$(document).on('click', '#update', function (e) {
 		e.preventDefault();
 		$.ajax({
@@ -262,6 +302,25 @@ text-secondary
 				url: '{% url "basket:basket_update" %}',
 				data: {
 					productid: $('#update').val(),
+					quantity: $('#edit-quantity option:selected').text(),
+					size: $('#edit-size option:selected').text(),
+					csrfmiddlewaretoken: "{{csrf_token}}",
+					action: 'post',
+				},
+				success: function (json) {
+					window.location.reload(true);
+				},
+				error: function (xhr, errmsg, err) {}
+			});
+	})
+
+	$(document).on('click', '#auth-update', function (e) {
+		e.preventDefault();
+		$.ajax({
+				type: 'POST',
+				url: '{% url "basket:auth_basket_update" %}',
+				data: {
+					productid: $('#auth-update').val(),
 					quantity: $('#edit-quantity option:selected').text(),
 					size: $('#edit-size option:selected').text(),
 					csrfmiddlewaretoken: "{{csrf_token}}",

@@ -62,6 +62,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'store.context_processors.categories',
                 'basket.context_processors.basket',
+                'basket.context_processors.basketModel',
                 'wishlist.context_processors.wishlist',
             ],
         },

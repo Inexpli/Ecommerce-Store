@@ -73,11 +73,7 @@ form.addEventListener('submit', function(ev) {
             } else {
               if (result.paymentIntent.status === 'succeeded') {
                 console.log('payment processed')
-                // There's a risk of the customer closing the window before callback
-                // execution. Set up a webhook or plugin to listen for the
-                // payment_intent.succeeded event that handles any business critical
-                // post-payment actions.
-                window.location.replace("http://127.0.0.1:8000/orders/order-done/");
+                location.href = '/orders/order-done/'
               }
             }
         });

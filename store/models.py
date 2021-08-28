@@ -30,7 +30,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to='images/')
     in_stock = models.BooleanField(default=False)
     promotion = models.BooleanField(default=False)
-    price = models.DecimalField(max_digits=5, decimal_places=2)
+    price = models.FloatField(max_length=6)
     created = models.DateTimeField(auto_now=True)
     slug = models.SlugField(max_length=255)
     objects = models.Manager()

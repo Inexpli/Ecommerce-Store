@@ -26,11 +26,11 @@
           <div class="col">
             <div class="card shadow-sm">
               <a href="{% url 'store:item' product.slug %}"><img src="{{ product.image.url }}" class="img-fluid" role="img" preserveAspectRatio="xMidYMid slice" focusable="false"></a>
-              <div class="card-body">
-                <div class="card-title">
+              <div class="row card-body">
+                <div class="col-12 card-title">
                   <h5 class="product-title">{{ product.title }}</h5>
                 </div>
-                <div class="d-flex ifstock justify-content-between align-items-center pb-3">
+                <div class="col-12 d-flex ifstock justify-content-between align-items-center pb-3">
                   <div class="ifstock-container">
                     <p class="card-text d-inline">
                       {% if product.in_stock == False %}
@@ -44,11 +44,11 @@
                     <p class="d-inline">${{ product.price }}</p>
                   </div>
                 </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
+                <div class="col-12 d-flex justify-content-between align-items-center">
+                  <div class="col-12 btn-group">
                   {% if user.is_authenticated %}
                     {% if product.in_stock == False %}
-                    <button type="button" data-index="{{product.id}}" class="btn btn-sm btn-outline-secondary btn-product wishlst wishlist-add">Add to wishlist</button>
+                    <button type="button" data-index="{{product.id}}" class="single btn btn-sm btn-outline-secondary btn-product wishlst wishlist-add">Add to wishlist</button>
                     {% else %}
                     <button type="button" data-index="{{product.id}}" class="btn btn-sm btn-outline-secondary btn-product wishlist-add">Add to wishlist</button>
                     <button type="button" data-index="{{product.id}}"
@@ -56,11 +56,15 @@
                     {% endif %}
                   {% else %}
                     {% if product.in_stock == False %}
-                    <button type="button" data-index="{{product.id}}" class="btn btn-sm btn-outline-secondary btn-product wishlst notauth-wishlist-add">Add to wishlist</button>
+                    <div class="col-12 btn-group">
+                      <button type="button" data-index="{{product.id}}" class="single btn btn-sm btn-outline-secondary btn-product wishlst notauth-wishlist-add">Add to wishlist</button>
+                    </div>
                     {% else %}
-                    <button type="button" data-index="{{product.id}}" class="btn btn-sm btn-outline-secondary btn-product notauth-wishlist-add">Add to wishlist</button>
-                    <button type="button" data-index="{{product.id}}"
-                    class="btn btn-sm btn-outline-secondary btn-product add-button">Add to basket</button>
+                    <div class="col-12 auto-group btn-group">
+                      <button type="button" data-index="{{product.id}}" class="btn btn-sm btn-outline-secondary btn-product notauth-wishlist-add">Add to wishlist</button>
+                      <button type="button" data-index="{{product.id}}"
+                      class="btn btn-sm btn-outline-secondary btn-product add-button">Add to basket</button>
+                    </div>
                     {% endif %}
                   {% endif %}
                 </div>
@@ -139,5 +143,31 @@
             error: function (xhr, errmsg, err) {}
         });
     })
+
+    $(window).ready(function() {
+      if ($(window).width() <= 490) {
+        Array.from(document.querySelectorAll('.auto-group')).forEach(elem => {
+          elem.className = 'col-12 auto-group btn-group-vertical';
+        });
+      }
+      else {
+        Array.from(document.querySelectorAll('.auto-group')).forEach(elem => {
+          elem.className = 'col-12 auto-group btn-group';
+        });
+      }
+    });
+
+    $(window).resize(function() {
+      if ($(window).width() <= 490) {
+        Array.from(document.querySelectorAll('.auto-group')).forEach(elem => {
+          elem.className = 'col-12 auto-group btn-group-vertical';
+        });
+      }
+      else {
+        Array.from(document.querySelectorAll('.auto-group')).forEach(elem => {
+          elem.className = 'col-12 auto-group btn-group';
+        });
+      }
+    });
 </script>
 {% endblock %}

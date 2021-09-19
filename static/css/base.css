@@ -3,7 +3,7 @@
 }
 
 body {
-    min-width: 292px;
+    min-width: 300px;
 }
 
 .row {
@@ -38,6 +38,18 @@ svg {
     margin-left: 2rem;
 }
 
+@media screen and (max-width: 1500px) {
+    .product-title {
+        font-size: 1.1rem !important;
+    }
+}
+
+@media screen and (max-width: 1278px) {
+    .product-title {
+        font-size: 1.1rem !important;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .product-title {
         font-size: 1.0rem !important;
@@ -49,8 +61,19 @@ svg {
 }
 
 @media screen and (max-width: 530px) {
+
     .card-title {
         height: 35px;
+    }
+}
+
+@media screen and (max-width: 491px) {
+    .single {
+        height: 54.2px;
+    }
+
+    .ifstock {
+        height: 64px;
     }
 }
 
@@ -60,15 +83,9 @@ svg {
     }
 }
 
-@media screen and (max-width: 395px) {
-    .d-flex {
-        display: block !important;
-    }
-}
-
-@media screen and (max-width: 350px) {
+@media screen and (max-width: 550px) {
     .card-title {
-        height: 55px;
+        height: 40px;
     }
 }
 
@@ -77,7 +94,6 @@ svg {
         display: inline-flex !important;
     }
 }
-
 
 .asteriskField {
     color: red;

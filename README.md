@@ -6,6 +6,7 @@
 1. git clone https://github.com/Inexpli/eCommerce-Store
 2. d:/GitHub/Ecommerce-Store/venv/Scripts/Activate.ps1  
 3. pip install -r requirements.txt
-4. py manage.py migrate
-5. py manage.py runserver
+4. py manage.py makemigrations
+5. py manage.py migrate
+6. py manage.py runserver
 ```

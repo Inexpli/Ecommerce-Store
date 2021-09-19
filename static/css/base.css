@@ -2,6 +2,10 @@
     box-sizing: border-box;
 }
 
+body {
+    min-width: 292px;
+}
+
 .row {
     --bs-gutter-x: 0 !important;
     --bs-gutter-y: 0 !important;
@@ -140,4 +144,12 @@ svg {
 .nav-obj {
     width: 112px;
     text-align: center !important;
+}
+
+.img {
+    width: 178.663px;
+}
+
+.imgcol {
+    background-color: #eeeeee;
 }

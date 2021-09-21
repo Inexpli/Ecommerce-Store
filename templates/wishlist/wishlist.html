@@ -10,7 +10,7 @@ text-secondary
 </div>
 <div class="album py-5 bg-light">
 	<div class="container">
-		{% if user.is_authenticated %}
+	{% if user.is_authenticated %}
 		{% if error != None %}
 		<h5 class="text-center">{{error}}</h5>
 		{% else %}
@@ -38,14 +38,19 @@ text-secondary
                     <p class="d-inline">${{ wishitem.item.price }}</p>
                   </div>
                 </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    {% if wishitem.item.in_stock == False %}
-                    <button type="button" data-index="{{wishitem.item.id}}" class="btn btn-sm btn-outline-secondary btn-product wishlst wishlst-remove">Remove from wishlist</button>
-                    {% else %}
-                    <button type="button" data-index="{{wishitem.item.id}}" class="btn btn-sm btn-outline-secondary btn-product wishlst-remove">Remove from wishlist</button>
-                    <button type="button" data-index="{{wishitem.item.id}}"
-                    class="btn btn-sm btn-outline-secondary btn-product add-button">Add to basket</button>
+                <div class="row d-flex justify-content-between align-items-center">
+                  	<div class="col-12">
+						{% if wishitem.item.in_stock == False %}
+						<div class="col-12 btn-group">
+							<button type="button" data-index="{{wishitem.item.id}}" class="single-wl btn btn-sm btn-outline-secondary btn-product wishlst wishlst-remove">Remove from wishlist</button>
+						</div>
+						{% else %}
+						<div class="col-12 auto-group btn-group">
+							<button type="button" data-index="{{wishitem.item.id}}" class="btn btn-sm btn-outline-secondary btn-product wishlst-remove">Remove from wishlist</button>
+							<button type="button" data-index="{{wishitem.item.id}}"
+							class="btn btn-sm btn-outline-secondary btn-product add-button">Add to basket</button>
+						</div>
+					</div>
                     {% endif %}
                 </div>
                 </div>
@@ -54,7 +59,7 @@ text-secondary
           </div>
 		  {% endfor %}
 		</div>
-		{% else %}
+	{% else %}
 		{% with total_quantity=wishlist|length %}
 		{% if total_quantity > 0 %}
 		<div class="row row-cols-2 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-3">
@@ -81,19 +86,26 @@ text-secondary
 								<p class="d-inline">${{ item.product.price }}</p>
 							</div>
 						</div>
-						<div class="d-flex justify-content-between align-items-center">
-							<div class="btn-group">
+						<div class="row justify-content-between align-items-center">
+							<div class="col-12">
 								{% if item.product.in_stock == False %}
-								<button type="button" data-index="{{item.product.id}}"
-									class="btn btn-sm btn-outline-secondary btn-product notauth-wishlst-remove">Remove
-									from wishlist</button>
+								<div class="col-12 btn-group">
+									<button type="button" data-index="{{item.product.id}}"
+										class="single-wl btn btn-sm btn-outline-secondary btn-product notauth-wishlst-remove">Remove
+										from wishlist
+									</button>
+								</div>
 								{% else %}
-								<button type="button" data-index="{{item.product.id}}"
-									class="btn btn-sm btn-outline-secondary btn-product notauth-wishlst-remove">Remove
-									from wishlist</button>
-								<button type="button" data-index="{{item.product.id}}"
-									class="btn btn-sm btn-outline-secondary btn-product add-button">Add to
-									basket</button>
+								<div class="col-12 auto-group btn-group">
+									<button type="button" data-index="{{item.product.id}}"
+										class="btn btn-sm btn-outline-secondary btn-product notauth-wishlst-remove">Remove
+										from wishlist
+									</button>
+									<button type="button" data-index="{{item.product.id}}"
+										class="btn btn-sm btn-outline-secondary btn-product add-button">Add to
+										basket
+									</button>
+								</div>
 								{% endif %}
 							</div>
 						</div>
@@ -167,5 +179,31 @@ text-secondary
 			error: function (xhr, errmsg, err) {}
 		});
 	})
+
+	$(window).ready(function() {
+      if ($(window).width() <= 575) {
+        Array.from(document.querySelectorAll('.auto-group')).forEach(elem => {
+          elem.className = 'col-12 auto-group btn-group-vertical';
+        });
+      }
+      else {
+        Array.from(document.querySelectorAll('.auto-group')).forEach(elem => {
+          elem.className = 'col-12 auto-group btn-group';
+        });
+      }
+    });
+
+    $(window).resize(function() {
+      if ($(window).width() <= 575) {
+        Array.from(document.querySelectorAll('.auto-group')).forEach(elem => {
+          elem.className = 'col-12 auto-group btn-group-vertical';
+        });
+      }
+      else {
+        Array.from(document.querySelectorAll('.auto-group')).forEach(elem => {
+          elem.className = 'col-12 auto-group btn-group';
+        });
+      }
+    });
 </script>
 {% endblock %}

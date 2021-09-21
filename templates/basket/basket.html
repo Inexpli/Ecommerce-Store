@@ -13,7 +13,7 @@ text-secondary
 	{% if user.is_authenticated %}
 		{% if total_quantity > 0 %}
 		<div class="row mb-4">
-			<div class="col-6">
+			<div class="col-10">
 				<div class="basket-info">
 					<h2>Your basket</h2>
 					<h4>Total: <span class="text-muted">(
@@ -25,11 +25,11 @@ text-secondary
 				</div>
 			</div>
 			<div class="col-2"></div>
-			<div class="col-2 text-center" style="position: relative;">
-				<button class="btn btn-outline-danger" type="button" style="width: 100px; height: 70px; position: absolute; top: 50%; right:20%; -ms-transform: translateY(-50%); transform: translateY(-50%);">Clear basket</button>
+			<div class="col-6 text-start pt-3">
+				<button class="btn btn-outline-danger" type="button">Clear basket</button>
 			</div>
-			<div class="col-2 text-center" style="position: relative;">
-				<button class="btn btn-outline-success" type="button" onclick="location.href='/payment/'" style="width: 100px; height: 70px; position: absolute; top: 50%; right:20%; -ms-transform: translateY(-50%); transform: translateY(-50%);">Checkout</button>
+			<div class="col-6 text-end pt-3">
+				<button class="btn btn-outline-success" type="button" onclick="location.href='/payment/'">Checkout</button>
 			</div>
 		{% else %}
 			<h3 class="text-center">Your basket is empty, <a href="{% url 'store:all' %}">do something with it</a></h3>
@@ -39,17 +39,17 @@ text-secondary
 			{% for basketitem in basketmodel %}
 			<section class="items">
 				<div class="item border row">
-					<div class="col-2">
+					<div class="col-12 col-md-4 col-lg-3 col-xl-2 imgcol">
 						<img class="img-fluid" id="productImg{{basketitem.item.id}}" src="{{ basketitem.item.image.url }}">
 					</div>
-					<div class="col-5 p-3">
+					<div class="col-6 col-md-4 col-lg-5 col-xl-5 p-3">
 						<h5 id="productTitle{{basketitem.item.id}}">{{basketitem.item.title}}</h5>
 						<br>
 						<h6 id="size{{basketitem.item.id}}" data-index="{{basketitem.size}}">Size: {{basketitem.size}}</h6>
 						<h6 id="qty{{basketitem.item.id}}" data-index="{{basketitem.quantity}}">Quantity: {{basketitem.quantity}}</h6>
 						<h6>Color: {{basketitem.item.color}}</h6>
 					</div>
-					<div class="col-5 p-3" style="text-align: end; position:relative;">
+					<div class="col-6 col-md-4 col-lg-4 col-xl-5  p-3" style="text-align: end; position:relative;">
 						<h5 id="productPrc{{basketitem.item.id}}" data-index="{{basketitem.item.price}}" class="text-muted price-info">{{basketitem.quantity}} x ${{basketitem.item.price}}</h5>
 						<hr style="margin-left: auto; max-width: 100px;">
 						<h5 id="totalPrc{{basketitem.item.id}}" data-index="{{basketitem.price}}" class="text-muted">${{basketitem.price}}</h5>

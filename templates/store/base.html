@@ -67,11 +67,17 @@
             <li class="nav-obj">
               <a href="{% url 'basket:basket' %}" class="nav-link {% block nav-basket %}text-white{% endblock %}">
                 <span id="basket-count" class="basket_count">
-                  {% with total_quantity=basket|length %}
-                  {% if total_quantity > 0 %}
-                  {{total_quantity}}
+                  {% if user.is_authenticated %}
+                    {% if total_quantity > 0 %}
+                      {{total_quantity}}
+                    {% endif %}
+                  {% else %}
+                    {% with total_quantity=basket|length %}
+                    {% if total_quantity > 0 %}
+                    {{total_quantity}}
+                    {% endif %}
+                    {% endwith %}
                   {% endif %}
-                  {% endwith %}
                 </span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                   class="bi d-block mx-auto mb-1" viewBox="0 0 16 16">

@@ -48,11 +48,14 @@
                   <div class="col-12 btn-group">
                   {% if user.is_authenticated %}
                     {% if product.in_stock == False %}
-                    <button type="button" data-index="{{product.id}}" class="single btn btn-sm btn-outline-secondary btn-product wishlst wishlist-add">Add to wishlist</button>
+                    <div class="col-12 btn-group">
+                      <button type="button" data-index="{{product.id}}" class="single btn btn-sm btn-outline-secondary btn-product wishlst wishlist-add">Add to wishlist</button>
+                    </div>
                     {% else %}
-                    <button type="button" data-index="{{product.id}}" class="btn btn-sm btn-outline-secondary btn-product wishlist-add">Add to wishlist</button>
-                    <button type="button" data-index="{{product.id}}"
-                    class="btn btn-sm btn-outline-secondary btn-product auth-add-button">Add to basket</button>
+                    <div class="col-12 auto-group btn-group">
+                      <button type="button" data-index="{{product.id}}" class="btn btn-sm btn-outline-secondary btn-product wishlist-add">Add to wishlist</button>
+                      <button type="button" data-index="{{product.id}}" class="btn btn-sm btn-outline-secondary btn-product auth-add-button">Add to basket</button>
+                    </div>
                     {% endif %}
                   {% else %}
                     {% if product.in_stock == False %}

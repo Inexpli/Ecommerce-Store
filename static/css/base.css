@@ -44,6 +44,12 @@ svg {
     }
 }
 
+@media screen and (min-width: 1200px) and (max-width: 1400px) {
+    .single-wl {
+        height: 51.6px;
+    }
+}
+
 @media screen and (max-width: 1278px) {
     .product-title {
         font-size: 1.1rem !important;
@@ -55,8 +61,24 @@ svg {
         font-size: 1.0rem !important;
     }
 
+    .single-wl {
+        height: 48.4px;
+    }
+
     .btn-product {
         padding: .15rem .25rem !important;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .single-wl {
+        height: 54.2px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .card-title {
+        height: 40px;
     }
 }
 
@@ -83,15 +105,15 @@ svg {
     }
 }
 
-@media screen and (max-width: 550px) {
-    .card-title {
-        height: 40px;
-    }
-}
-
 @media screen and (max-width: 395px) {
     .foot {
         display: inline-flex !important;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .single-wl {
+        height: 75px;
     }
 }
 

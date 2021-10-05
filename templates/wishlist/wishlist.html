@@ -18,9 +18,9 @@ text-secondary
 		<div class="row row-cols-2 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-3">
 			{% for wishitem in wishlist %}
 			<div class="col">
-            <div class="card shadow-sm">
-              <a href="{% url 'store:item' wishitem.item.slug %}"><img src="{{ wishitem.item.image.url }}" class="img-fluid" role="img" preserveAspectRatio="xMidYMid slice" focusable="false"></a>
-              <div class="card-body">
+              <div class="card shadow-sm">
+              	<a href="{% url 'store:item' wishitem.item.slug %}"><img src="{{ wishitem.item.image.url }}" class="img-fluid" role="img" preserveAspectRatio="xMidYMid slice" focusable="false"></a>
+                <div class="card-body">
                 <div class="card-title">
                   <h5 class="product-title">{{ wishitem.item.title }}</h5>
                 </div>
@@ -56,8 +56,7 @@ text-secondary
                 </div>
               </div>
             </div>
-          </div>
-		  {% endfor %}
+			{% endfor %}
 		</div>
 	{% else %}
 		{% with total_quantity=wishlist|length %}
@@ -118,9 +117,8 @@ text-secondary
 		<h4 class="text-center">Your wishlist is empty</h4>
 		{% endif %}
 		{% endwith %}
+		{% endif %}
 	</div>
-	{% endif %}
-</div>
 </div>
 <script>
 	function Previous() {

@@ -156,4 +156,4 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
 
 # Stripe config
-STRIPE_ENDPOINT_SECRET = 'whsec_hHuKgngUEuDJO5bIBvq4MZToqj1MehvM'
+#STRIPE_ENDPOINT_SECRET = ''

@@ -276,13 +276,13 @@
 
             <ul class="list-unstyled mb-0">
               <li>
-                <a href="#!" class="text-white">Create new account</a>
+                <a href="{% url 'account:register' %}" class="text-white">Create New Account</a>
               </li>
               <li>
-                <a href="#!" class="text-white">Log in</a>
+                <a href="{% url 'account:login' %}" class="text-white">Log In</a>
               </li>
               <li>
-                <a href="#!" class="text-white">Forget password</a>
+                <a href="{% url 'account:password_reset_request' %}" class="text-white">Forget Password</a>
               </li>
             </ul>
           </div>

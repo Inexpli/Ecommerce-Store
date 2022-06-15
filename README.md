@@ -1,6 +1,6 @@
 # Ecommerce Store
 
-## Instalation
+## Installation
 
 ```
 1. git clone https://github.com/Inexpli/eCommerce-Store

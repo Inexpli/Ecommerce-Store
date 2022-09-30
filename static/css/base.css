@@ -34,6 +34,10 @@ svg {
     box-shadow: 3px 3px grey;
 }
 
+.card-title {
+    min-height: 2.7rem;
+}
+
 #quantity-select {
     margin-left: 2rem;
 }

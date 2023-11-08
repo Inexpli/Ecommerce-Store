@@ -41,7 +41,8 @@
 
 ### Time considered in WebApplication: 
  - UTC
- 
+   
+![umldiagram](https://github.com/Inexpli/eCommerce-Store/assets/61479966/9a6c320d-c137-4176-a6e8-a62221542036)
 ![home](https://user-images.githubusercontent.com/61479966/136077739-72ccc2b6-3e9c-4323-9de5-d448a52f5a38.png)
 ![products](https://user-images.githubusercontent.com/61479966/136082175-b633cab9-3923-41c1-828b-6a6fc55576fa.png)
 ![item](https://user-images.githubusercontent.com/61479966/136077931-abc1da41-30f8-454b-956c-a89b0774488b.png)

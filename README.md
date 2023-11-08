@@ -4,10 +4,12 @@
 
 ```
 1. git clone https://github.com/Inexpli/eCommerce-Store
-2. pip install -r requirements.txt
-3. py manage.py makemigrations
-4. py manage.py migrate
-5. py manage.py runserver
+2. python -m venv ./venv
+3. Activate
+4. pip install -r requirements.txt
+5. py manage.py makemigrations
+6. py manage.py migrate
+7. py manage.py runserver
 ```
 
 ### Libraries:
